@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_r_main"
+        android:icon="@drawable/lendings"
+        android:title="@string/r_main"/>
+    <item
+        android:id="@+id/item_r_lend"
+        android:icon="@drawable/lendings"
+        android:title="@string/r_lendings"/>
+
+    <item
+        android:id="@+id/item_r_books"
+        android:icon="@drawable/books"
+        android:title="@string/r_books"/>
+
+    <item
+        android:id="@+id/item_r_profile"
+        android:icon="@drawable/profile"
+        android:title="@string/r_profile"/>
+
+</menu>

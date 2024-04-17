@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">LibraryApp</string>
+
+    <string name="r_main">Главная</string>
+    <string name="r_lendings">Выдачи</string>
+    <string name="r_books">Книги</string>
+    <string name="r_profile">Профиль</string>
+    <string name="r_greetings">Добро пожаловать!</string>
+
+    <string name="l_lendings">Выдачи</string>
+    <string name="l_books">Книги</string>
+    <string name="l_specialties">Специальности</string>
+    <string name="l_readers">Читатели</string>
+
+    <string name="registrate">Зарегистрироваться</string>
+    <string name="login">Войти</string>
+    <string name="name">Ваше имя</string>
+    <string name="address">Адрес</string>
+    <string name="phone">Телефон</string>
+    <string name="password">Пароль</string>
+    <string name="check">Повторите пароль</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
