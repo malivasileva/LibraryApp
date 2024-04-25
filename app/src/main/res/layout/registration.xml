@@ -49,6 +49,14 @@
             android:layout_height="48dp"
             android:text="@string/registrate"/>
 
+        <TextView
+            android:id="@+id/pass_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pass_error"
+            android:textColor="@color/red"
+            android:visibility="invisible"/>
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

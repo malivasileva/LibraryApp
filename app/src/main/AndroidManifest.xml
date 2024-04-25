@@ -27,7 +27,7 @@
         <activity android:name=".reader.ReaderActivity">
 
         </activity>
-        <activity android:name=".LibrarianActivity"
+        <activity android:name=".librarian.LibrarianActivity"
             android:exported="false">
 
         </activity>

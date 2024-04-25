@@ -1,4 +1,4 @@
-package com.example.libraryapp;
+package com.example.libraryapp.librarian;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.libraryapp.DatabaseConnection;
+import com.example.libraryapp.R;
 import com.example.libraryapp.databinding.LMainBinding;
 import com.example.libraryapp.reader.rMainFragment;
 

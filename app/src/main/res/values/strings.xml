@@ -13,6 +13,7 @@
     <string name="l_readers">Читатели</string>
 
     <string name="registrate">Зарегистрироваться</string>
+    <string name="pass_error">Пароли не совпадают</string>
     <string name="login">Войти</string>
     <string name="name">Ваше имя</string>
     <string name="address">Адрес</string>

@@ -1,4 +1,4 @@
-package com.example.libraryapp;
+package com.example.libraryapp.librarian;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.libraryapp.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link lSpecialtyFragment#newInstance} factory method to
+ * Use the {@link lBooksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class lSpecialtyFragment extends Fragment {
+public class lBooksFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class lSpecialtyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public lSpecialtyFragment() {
+    public lBooksFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class lSpecialtyFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment lSpecialtyFragment.
+     * @return A new instance of fragment lBooksFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static lSpecialtyFragment newInstance(String param1, String param2) {
-        lSpecialtyFragment fragment = new lSpecialtyFragment();
+    public static lBooksFragment newInstance(String param1, String param2) {
+        lBooksFragment fragment = new lBooksFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class lSpecialtyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_l_specialty, container, false);
+        return inflater.inflate(R.layout.fragment_l_books, container, false);
     }
 }

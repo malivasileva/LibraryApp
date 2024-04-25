@@ -12,7 +12,6 @@ public class AuthRunnable implements Runnable{
     public final static int READER = 2;
     public Thread thread;
     private AuthHandlerThread authHandlerThread;
-    private boolean alive = false;
     private Long login;
     private String password;
     private int type;
