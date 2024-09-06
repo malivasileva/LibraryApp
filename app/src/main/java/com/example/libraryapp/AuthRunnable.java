@@ -51,7 +51,7 @@ public class AuthRunnable implements Runnable{
     }
     private void authReader() {
         try (Connection db = DatabaseConnection.getAuthConnection()){
-            CallableStatement callableStatement = db.prepareCall("{ ? = call authenticate_reader(?, ?) }");
+                CallableStatement callableStatement = db.prepareCall("{ ? = call authenticate_reader(?, ?) }");
             callableStatement.registerOutParameter(1, Types.BOOLEAN);
             callableStatement.setLong(2, login);
             callableStatement.setString(3, password);
