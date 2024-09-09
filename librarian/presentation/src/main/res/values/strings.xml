@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="l_lendings">Выдачи</string>
+    <string name="l_books">Книги</string>
+    <string name="l_specialties">Специальности</string>
+    <string name="l_readers">Читатели</string>
+    <string name="l_profile">Профиль</string>
+</resources>

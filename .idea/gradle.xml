@@ -10,6 +10,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/librarian" />
+            <option value="$PROJECT_DIR$/librarian/domain" />
+            <option value="$PROJECT_DIR$/librarian/presentation" />
+            <option value="$PROJECT_DIR$/reader" />
+            <option value="$PROJECT_DIR$/reader/domain" />
+            <option value="$PROJECT_DIR$/reader/presentation" />
+            <option value="$PROJECT_DIR$/resources" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

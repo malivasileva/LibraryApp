@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="r_main">Главная</string>
+    <string name="r_lendings">Выдачи</string>
+    <string name="r_books">Книги</string>
+    <string name="r_profile">Профиль</string>
+    <string name="r_greetings">Добро пожаловать!</string>
+</resources>

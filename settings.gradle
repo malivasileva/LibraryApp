@@ -15,3 +15,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "LibraryApp"
 include ':app'
+include ':reader'
+include ':librarian'
+include ':data'
+include ':reader:presentation'
+include ':reader:domain'
+include ':librarian:presentation'
+include ':librarian:domain'
+include ':resources'

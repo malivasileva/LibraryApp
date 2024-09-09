@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.libraryapp'
+    namespace 'com.malivasileva.libraryapp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.libraryapp"
+        applicationId "com.malivasileva.libraryapp"
         minSdk 26
         targetSdk 34
         versionCode 1
@@ -32,9 +32,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
+    implementation project(':reader:presentation')
+    implementation project(':librarian:presentation')
+    implementation project(':data')
+    implementation project(':resources')
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
