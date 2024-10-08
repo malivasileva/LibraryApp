@@ -1,8 +1,5 @@
 package com.malivasileva.libraryapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,14 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.malivasileva.presentation.LibrarianActivity;
 import com.malivasileva.presentation.ReaderActivity;
 
-
-import java.sql.*;
+import dagger.hilt.android.AndroidEntryPoint;
 
 public class MainActivity extends AppCompatActivity {
-    Connection db;
     UiHandler uiHandler;
     AuthHandlerThread handlerThread;
     AuthRunnable runnable;

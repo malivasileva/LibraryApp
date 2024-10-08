@@ -22,13 +22,13 @@ public class RegRunnable implements Runnable{
     public void run() {
         try(Connection db = DatabaseConnection.getAuthConnection()) {
             CallableStatement callableStatement = db.prepareCall("{ ? = call register_reader(?, ?, ?, ?) }");
-            callableStatement.registerOutParameter(1, Types.BIGINT);
+            callableStatement.registerOutParameter(1, Types.INTEGER);
             callableStatement.setString(2, reader.getName());
             callableStatement.setString(3, reader.getAddress());
             callableStatement.setString(4, reader.getPhone());
             callableStatement.setString(5, reader.getPassword());
             callableStatement.execute();
-            long response = callableStatement.getLong(1);
+            long response = callableStatement.getInt(1);
             regHandlerThread.sendResponse(response);
         } catch (SQLException e) {
             e.printStackTrace();

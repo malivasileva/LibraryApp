@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/padding_small"
     tools:context="com.malivasileva.presentation.rLendingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/r_lendings" />
+        android:text="@string/r_lendings"
+        android:textSize="@dimen/text_large"
+        android:textColor="@color/black"
+        android:layout_marginBottom="@dimen/padding_mid"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lendings_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

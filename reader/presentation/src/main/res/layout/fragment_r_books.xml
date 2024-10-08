@@ -3,12 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.malivasileva.libraryapp.com.malivasileva.presentation.rBooksFragment">
+    android:layout_margin="@dimen/padding_small"
+    tools:context="com.malivasileva.presentation.rBooksFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/r_books" />
+        android:text="@string/r_books"
+        android:textSize="@dimen/text_large"
+        android:textColor="@color/black"
+        android:layout_marginBottom="@dimen/padding_mid"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/books_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

@@ -9,26 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/padding_small"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/r_greetings"
-            android:textSize="36dp"
+            android:layout_margin="@dimen/padding_small"
+            android:textSize="@dimen/text_large"
             android:textColor="@color/black"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="@dimen/padding_mid"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
 
         </androidx.recyclerview.widget.RecyclerView>
 
-
     </LinearLayout>
-
-
 
 </FrameLayout>

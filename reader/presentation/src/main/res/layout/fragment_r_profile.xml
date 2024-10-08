@@ -3,12 +3,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/padding_small"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.malivasileva.presentation.rProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/r_profile" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_mid"
+            android:text="@string/r_profile"
+            android:textSize="@dimen/text_large"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/profile_tv_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/readers_card"
+            android:textSize="@dimen/text_mid"
+            app:layout_constraintTop_toBottomOf="@id/profile_title" />
+        <EditText
+            android:id="@+id/profile_et_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:enabled="false"
+            android:inputType="numberDecimal"
+            android:labelFor="@id/profile_et_phone"
+            android:text="@string/mock_card"
+            android:textSize="@dimen/text_mid"
+            app:layout_constraintTop_toBottomOf="@id/profile_tv_card" />
+
+        <TextView
+            android:id="@+id/profile_tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_mid"
+            android:text="@string/name"
+            app:layout_constraintTop_toBottomOf="@id/profile_et_card" />
+
+        <EditText
+            android:id="@+id/profile_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_mid"
+            android:enabled="false"
+            android:inputType="textPersonName"
+            android:text="@string/mock_name"
+            android:textSize="@dimen/text_mid"
+            app:layout_constraintTop_toBottomOf="@id/profile_tv_name" />
+
+        <TextView
+            android:id="@+id/profile_tv_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_mid"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:text="@string/phone"
+            app:layout_constraintTop_toBottomOf="@id/profile_et_name" />
+
+        <EditText
+            android:id="@+id/profile_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_mid"
+            android:enabled="false"
+            android:text="@string/mock_phone"
+            android:textSize="@dimen/text_mid"
+            app:layout_constraintTop_toBottomOf="@id/profile_tv_phone" />
+
+        <TextView
+            android:id="@+id/profile_tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_mid"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:text="@string/address"
+            app:layout_constraintTop_toBottomOf="@id/profile_et_phone" />
+
+        <EditText
+            android:id="@+id/profile_et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_mid"
+            android:enabled="false"
+            android:inputType="textPostalAddress"
+            android:text="@string/mock_address"
+            android:textSize="@dimen/text_mid"
+            app:layout_constraintTop_toBottomOf="@id/profile_tv_address" />
+
+        <Button
+            android:id="@+id/profile_exit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit"
+            app:layout_constraintBottom_toTopOf="@id/profile_delete_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/profile_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_profile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

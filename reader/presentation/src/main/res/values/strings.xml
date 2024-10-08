@@ -5,4 +5,18 @@
     <string name="r_books">Книги</string>
     <string name="r_profile">Профиль</string>
     <string name="r_greetings">Добро пожаловать!</string>
+    <string name="return_before">Вернуть до:</string>
+    <string name="lend_date">Выдано:</string>
+    <string name="returned">Возвращено:</string>
+    <string name="delete_profile">Удалить профиль</string>
+    <string name="exit">Выйти</string>
+    <string name="address">Адрес</string>
+    <string name="phone">Телефон</string>
+    <string name="name">Имя</string>
+    <string name="readers_card">Читательский билет</string>
+    <string name="mock_address">Address</string>
+    <string name="mock_phone">79998885566</string>
+    <string name="mock_name">Name</string>
+    <string name="mock_card">1</string>
+    <string name="pages_in_book">Страниц в книге:</string>
 </resources>

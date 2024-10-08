@@ -1,4 +1,5 @@
 package com.malivasileva.data;
+
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -6,11 +7,6 @@ import java.util.Properties;
 
 
 public class DatabaseConnection {
-
-/*    private static final String URL = "jdbc:postgresql://dpg-clsuvkdcm5oc739coqr0-a:5432/test_ia0h";
-    private static final String USERNAME = "test_ia0h_user";
-    private static final String PASSWORD = "XzCTiT9I5hvurgHgVzFa3y7H3yL6BFF1";*/
-
 
     private static final String URL = "jdbc:postgresql://10.0.2.2:5432/postgres";
     private static final String USERNAME = "postgres";
@@ -21,13 +17,7 @@ public class DatabaseConnection {
     private static final String[] LIBRARIAN = {"libr", "1111"};
 
     public static Connection getConnection() throws SQLException {
-
-        /*Properties props = new Properties();
-        props.setProperty("user", USERNAME);
-        props.setProperty("password", PASSWORD);
-        props.setProperty("ssl", "false");*/
-        Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        return conn;
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 
     public static Connection getAuthConnection() {
@@ -44,8 +34,11 @@ public class DatabaseConnection {
     }
 
     public static Connection getReaderConnection() throws SQLException {
+
         try {
             return DriverManager.getConnection(URL, READER[0], READER[1]);
+//            return readerDataSource.getConnection();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -54,8 +47,10 @@ public class DatabaseConnection {
     }
 
     public static Connection getLibrConnection() throws SQLException {
+
         try {
             return DriverManager.getConnection(URL, LIBRARIAN[0], LIBRARIAN[1]);
+//            return librarianDataSource.getConnection();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

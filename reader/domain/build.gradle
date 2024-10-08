@@ -6,3 +6,12 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+    // RxJava
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
+
+    // Если вы хотите использовать RxAndroid для работы с UI в presentation:
+//    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+
+}
