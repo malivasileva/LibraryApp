@@ -20,6 +20,8 @@ import com.malivasileva.presentation.ReaderActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     UiHandler uiHandler;
     AuthHandlerThread handlerThread;
