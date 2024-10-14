@@ -1,15 +1,18 @@
 package com.malivasileva.data.repository;
 
+import android.util.Log;
+
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.entities.BookEntity;
 import com.malivasileva.domain.model.Book;
 import com.malivasileva.domain.repositories.BookRepository;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import io.reactivex.rxjava3.core.Single;
 
 public class BookRepositoryImpl implements BookRepository {
     private final DatabaseService databaseService;
@@ -24,28 +27,30 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> getBooksFor(String query) {
-        try {
-            return databaseService.getBooksFor(query).stream()
-                    .map(this::mapEntityToModel)
-                    .collect(Collectors.toList());
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            List<Book> noBooksFound = new ArrayList<>();
-            noBooksFound.add(new Book(
-                    0,
-                    "Ошибка подключения данных",
-                    Arrays.toString(e.getStackTrace()),
-                    "",
-                    "",
-                    0,
-                    0f,
-                    0,
-                    0
-            ));
-            return noBooksFound;
-        }
+    public Single<List<Book>> getBooksFor(String query) {
+//        Log.d("govno-repoimpl", "bless me god");
+        return databaseService.getBooksFor(query)
+                .map(bookEntities -> bookEntities.stream()
+                        .map(this::mapEntityToModel)
+                        .collect(Collectors.toList())
+                )
+                .onErrorReturn(throwable -> {
+//                    throwable.printStackTrace();
+                    List<Book> noBooksFound = new ArrayList<>();
+                    noBooksFound.add(new Book(
+                            0,
+                            "Ошибка подключения данных",
+                            throwable.getMessage(),
+                            //Arrays.toString(throwable.getStackTrace()),
+                            "",
+                            "",
+                            0,
+                            0f,
+                            0,
+                            0
+                    ));
+                    return noBooksFound;
+                });
     }
 
     private Book mapEntityToModel(BookEntity entity) {

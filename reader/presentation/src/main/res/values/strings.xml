@@ -19,4 +19,6 @@
     <string name="mock_name">Name</string>
     <string name="mock_card">1</string>
     <string name="pages_in_book">Страниц в книге:</string>
+    <string name="search_books">Название или автор</string>
+    <string name="amount_of_books">"Экземпляров: "</string>
 </resources>

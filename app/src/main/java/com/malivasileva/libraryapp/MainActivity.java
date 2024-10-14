@@ -15,8 +15,11 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.malivasileva.data.UserStorage;
 import com.malivasileva.presentation.LibrarianActivity;
 import com.malivasileva.presentation.ReaderActivity;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -27,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     AuthHandlerThread handlerThread;
     AuthRunnable runnable;
     //Boolean isAuthed = false;
+
+    @Inject
+    public UserStorage userStorage;
 
     EditText etLogin;
     EditText etPassword;
@@ -127,8 +133,10 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             boolean isAuthed = (boolean) msg.obj;
             Toast.makeText(MainActivity.this, Boolean.toString(isAuthed), Toast.LENGTH_SHORT).show();
-            if (isAuthed) goToActivity();
-            else Toast.makeText(MainActivity.this, "Неверный логин или пароль :(", Toast.LENGTH_SHORT).show();
+            if (isAuthed) {
+                userStorage.saveId(login);
+                goToActivity();
+            } else Toast.makeText(MainActivity.this, "Неверный логин или пароль :(", Toast.LENGTH_SHORT).show();
         }
     }
 

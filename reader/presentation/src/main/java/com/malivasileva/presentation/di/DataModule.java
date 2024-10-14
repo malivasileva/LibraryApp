@@ -1,6 +1,10 @@
 package com.malivasileva.presentation.di;
 
+import android.content.Context;
+
 import com.malivasileva.data.DatabaseService;
+import com.malivasileva.data.SharedPrefUserStorage;
+import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.repository.BookRepositoryImpl;
 import com.malivasileva.data.repository.ReaderRepositoryImpl;
 import com.malivasileva.data.repository.LendingsRepositoryImpl;
@@ -13,6 +17,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
 @Module
@@ -21,8 +26,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public ReaderRepository provideReaderRepository(DatabaseService databaseService) {
-        return new ReaderRepositoryImpl(databaseService);
+    public ReaderRepository provideReaderRepository(DatabaseService databaseService, UserStorage userStorage) {
+        return new ReaderRepositoryImpl(databaseService, userStorage);
     }
 
     @Provides
@@ -41,5 +46,11 @@ public class DataModule {
     @Singleton
     public DatabaseService provideDatabaseService() {
         return new DatabaseService();
+    }
+
+    @Provides
+    @Singleton
+    public UserStorage provideUserStorage(@ApplicationContext Context context) {
+        return new SharedPrefUserStorage(context);
     }
 }

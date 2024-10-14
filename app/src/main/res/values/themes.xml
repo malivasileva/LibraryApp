@@ -1,9 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.LibraryApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.LibraryApp" parent="Base.Theme.LibraryApp" />
+    <style name="Theme.LibraryApp" parent="Base.Theme.LibraryApp">
+        <!-- Основные цвета -->
+        <item name="colorPrimary">@color/primary</item> <!-- Основной цвет -->
+        <item name="colorPrimaryVariant">@color/primary_variant</item> <!-- Вариант основного цвета -->
+        <item name="colorOnPrimary">@color/on_primary</item> <!-- Цвет текста на основном цвете -->
+
+        <!-- Фон и поверхность -->
+        <item name="background">@color/background</item> <!-- Фоновый цвет приложения -->
+        <item name="colorSurface">@color/surface</item> <!-- Цвет поверхности (карточки, меню и т.д.) -->
+        <item name="colorOnSurface">@color/black</item> <!-- Цвет текста на поверхности -->
+
+        <!-- Ошибка -->
+        <item name="colorError">@color/red</item> <!-- Цвет для ошибок -->
+        <item name="colorOnError">@color/white</item> <!-- Цвет текста на фоне ошибки -->
+
+        <!-- Статус-бар и навигационная панель -->
+        <item name="android:statusBarColor">@color/primary</item> <!-- Цвет статус-бара -->
+        <item name="android:navigationBarColor">@color/primary_50</item> <!-- Цвет навигационной панели -->
+
+        <!-- Фон окна -->
+        <item name="android:windowBackground">@color/background</item> <!-- Установить фон окна -->
+    </style>
 </resources>
+    <!-- Base application theme. -->

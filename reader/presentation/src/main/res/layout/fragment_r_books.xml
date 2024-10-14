@@ -6,20 +6,35 @@
     android:layout_margin="@dimen/padding_small"
     tools:context="com.malivasileva.presentation.rBooksFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/r_books"
-        android:textSize="@dimen/text_large"
-        android:textColor="@color/black"
-        android:layout_marginBottom="@dimen/padding_mid"/>
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/books_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/r_books"
+            android:textSize="@dimen/text_large"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/padding_mid"/>
 
+        <SearchView
+            android:id="@+id/search_book"
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:hint="@string/search_books"
+            android:layout_marginBottom="@dimen/padding_small"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/books_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:backgroundTint="@color/background"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>
 </FrameLayout>

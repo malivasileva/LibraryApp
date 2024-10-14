@@ -2,10 +2,11 @@ package com.malivasileva.domain.repositories;
 
 import com.malivasileva.domain.model.Reader;
 
-import java.sql.SQLException;
+import io.reactivex.rxjava3.core.Single;
 
 public interface ReaderRepository {
-    public Reader getReader(int card);
+    public Single<Reader> getReaderWithId(int card);
+    Single<Reader> getReader();
 
     public void updateReader(Reader reader);
 

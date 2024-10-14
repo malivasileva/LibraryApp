@@ -3,63 +3,99 @@ package com.malivasileva.presentation;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link rBooksFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.malivasileva.presentation.adapters.BookAdapter;
+
+import java.util.ArrayList;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class rBooksFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private SearchView searchView;
+    private RecyclerView recyclerView;
+    private BookAdapter bookAdapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ReaderViewModel viewModel;
+
 
     public rBooksFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment rBooksFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static rBooksFragment newInstance(String param1, String param2) {
-        rBooksFragment fragment = new rBooksFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        viewModel = new ViewModelProvider(requireActivity()).get(ReaderViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_r_books, container, false);
+        View view = inflater.inflate(R.layout.fragment_r_books, container, false);
+        searchView = view.findViewById(R.id.search_book);
+        recyclerView = view.findViewById(R.id.books_rv); // Убедитесь, что у вас есть этот ID в XML
+        bookAdapter = new BookAdapter(new ArrayList<>());
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(bookAdapter);
+
+
+        // Наблюдение за booksLiveData
+        viewModel.getBooksLiveData().observe(getViewLifecycleOwner(), books -> {
+            if (books != null) {
+                bookAdapter.updateBooks(books); // Обновление данных в адаптере RecyclerView
+            }
+        });
+
+        // Наблюдение за errorLiveData
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                // Показ ошибки пользователю (например, через Toast)
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+//                        loadBooks(query);
+                        Log.d("govno-fragment", "in submit listener");
+                        viewModel.searchBooks(query);
+                        Log.d("govno-fragment", "in submit listener but finished");
+                        searchView.clearFocus();
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        Log.d("govno-fragment", "in chenged listener");
+                        return false;
+                    }
+                });
+            }
+        });
+
+        return view;
+    }
+
+    private void loadBooks(String query) {
+
     }
 }

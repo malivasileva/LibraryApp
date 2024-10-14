@@ -1,11 +1,14 @@
 package com.malivasileva.libraryapp;
 
 import com.malivasileva.data.DatabaseConnection;
+import com.malivasileva.data.UserStorage;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+
+import javax.inject.Inject;
 
 public class AuthRunnable implements Runnable{
     public final static int LIBRARIAN = 1;

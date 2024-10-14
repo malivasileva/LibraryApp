@@ -22,4 +22,40 @@ public class Book {
         this.copies = copies;
         this.year = year;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public int getCopies() {
+        return copies;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public String getPublisheAddress() {
+        return publisheAddress;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
 }
