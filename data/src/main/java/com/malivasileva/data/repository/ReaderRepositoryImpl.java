@@ -1,14 +1,10 @@
 package com.malivasileva.data.repository;
 
-import android.util.Log;
-
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.entities.ReaderEntity;
 import com.malivasileva.domain.model.Reader;
 import com.malivasileva.domain.repositories.ReaderRepository;
-
-import java.sql.SQLException;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -24,7 +20,6 @@ public class ReaderRepositoryImpl implements ReaderRepository {
 
     @Override
     public Single<Reader> getReaderWithId(int card) {
-//        Log.d("govno-repoimpl", "card is " + card);
         return databaseService.getReader(card)
                 .map(this::mapEntityToModel)
                 .onErrorReturn(throwable -> {
@@ -39,7 +34,6 @@ public class ReaderRepositoryImpl implements ReaderRepository {
 
     @Override
     public Single<Reader> getReader() {
-        Log.d("govno-readerRepoImpl", "in getReader");
         return databaseService.getReader(userStorage.getId())
                 .map(this::mapEntityToModel)
                 .onErrorReturn(
@@ -55,13 +49,21 @@ public class ReaderRepositoryImpl implements ReaderRepository {
     }
 
     @Override
-    public void updateReader(Reader reader) {
-        //todo
+    public Single<Boolean> updateReader(Reader reader) {
+        return databaseService.updateReader(mapModelToEntity(reader))
+                .onErrorReturn(
+                        throwable -> {
+                            throwable.printStackTrace();
+                            return false;
+                        }
+                );
     }
 
     @Override
-    public void deleteReader(int card) {
-        //todo
+    public Single<Boolean> deleteReader(int card) {
+        return Single.create(emitter -> {
+            emitter.onSuccess(true);
+        });
     }
 
     private Reader mapEntityToModel(ReaderEntity entity) {
@@ -71,6 +73,14 @@ public class ReaderRepositoryImpl implements ReaderRepository {
                 entity.getPhone(),
                 entity.getAddress()
         );
+    }
+
+    private ReaderEntity mapModelToEntity(Reader reader) {
+        return new ReaderEntity(
+                reader.getCard(),
+                reader.getName(),
+                reader.getPhone(),
+                reader.getAddress());
     }
 
 }

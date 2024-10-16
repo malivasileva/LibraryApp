@@ -3,6 +3,8 @@ package com.malivasileva.domain.usecases;
 import com.malivasileva.domain.model.Reader;
 import com.malivasileva.domain.repositories.ReaderRepository;
 
+import io.reactivex.rxjava3.core.Single;
+
 public class SaveProfileUseCase {
     ReaderRepository readerRepository;
 
@@ -10,7 +12,7 @@ public class SaveProfileUseCase {
         this.readerRepository = readerRepository;
     }
 
-    public void execute(Reader reader) {
-        readerRepository.updateReader(reader);
+    public Single<Boolean> execute(Reader reader) {
+        return readerRepository.updateReader(reader);
     }
 }

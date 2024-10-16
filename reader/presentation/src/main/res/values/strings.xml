@@ -21,4 +21,5 @@
     <string name="pages_in_book">Страниц в книге:</string>
     <string name="search_books">Название или автор</string>
     <string name="amount_of_books">"Экземпляров: "</string>
+    <string name="edit_or_save_field">Изменить данные</string>
 </resources>

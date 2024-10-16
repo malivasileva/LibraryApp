@@ -1,6 +1,7 @@
 package com.malivasileva.presentation;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.malivasileva.presentation.databinding.RMainBinding;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -22,7 +21,7 @@ public class ReaderActivity extends AppCompatActivity {
 
 //    @Inject
 //    ViewModelProvider.Factory viewModelFactory;
-    private ReaderViewModel readerViewModel;
+    private ReaderViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +44,22 @@ public class ReaderActivity extends AppCompatActivity {
             else if (id == profile) replaceFragment(new rProfileFragment());
 
             return true;
+        });
+
+        viewModel = new ViewModelProvider(this).get(ReaderViewModel.class);
+
+        // Наблюдение за errorLiveData
+        viewModel.getErrorLiveData().observe(this, error -> {
+            if (error != null) {
+                // Показ ошибки пользователю (например, через Toast)
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        viewModel.getEventLiveData().observe(this, event -> {
+            if (event != null) {
+                Toast.makeText(this, event, Toast.LENGTH_SHORT).show();
+            }
         });
 
 //        readerViewModel = new ViewModelProvider(this).get(ReaderViewModel.class);

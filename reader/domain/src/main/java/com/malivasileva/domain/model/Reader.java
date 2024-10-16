@@ -28,4 +28,16 @@ public class Reader {
     public String getAddress() {
         return address;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

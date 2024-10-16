@@ -1,6 +1,10 @@
 package com.malivasileva.presentation;
 
+import static dagger.hilt.android.internal.Contexts.getApplication;
+
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -37,6 +41,7 @@ public class ReaderViewModel extends ViewModel {
 
     private final MutableLiveData<List<Book>> booksLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> eventLiveData = new MutableLiveData<>();
     private final CompositeDisposable disposables = new CompositeDisposable();  // Для управления подписками
 
     @Inject
@@ -64,40 +69,58 @@ public class ReaderViewModel extends ViewModel {
         return errorLiveData;
     }
 
+    public LiveData<String> getEventLiveData() { return eventLiveData; }
+
     public void searchBooks(String query) {
-//        Log.d("govno-viewmodel", "in searchBooks");
         disposables.add(
                 searchBookUseCase.execute(query)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 books -> {
-//                                    Log.d("govno-viewmodel", "in subscribe");
                                     booksLiveData.setValue(books);
                                 },
                                 throwable -> {
-//                                    Log.d("govno-viewmodel", "in error");
                                     errorLiveData.setValue("Error fetching books: " + throwable.getMessage());
                                 }
                         )
         );
-//        Log.d("govno-viewmodel", "finished searchBooks");
     }
 
     public void getProfile() {
-        Log.d("govno-viewmodel", "in getProfile");
         disposables.add(
             getProfileUseCase.execute()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             reader -> {
-                                Log.d("govno-viewmodel", "in subscribe");
                                 profileLiveData.setValue(reader);
                             },
                             throwable -> {
                                 throwable.printStackTrace();
+                                errorLiveData.setValue("Ошибка получения данных профиля.");
                             }
+                        )
+        );
+    }
+
+    public void updateProfile(String name, String phone, String address) {
+        Reader reader = getProfileLiveData().getValue();
+        reader.setName(name);
+        reader.setPhone(phone);
+        reader.setAddress(address);
+        disposables.add(
+                saveProfileUseCase.execute(reader)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                result -> {
+                                    String message = result ? "Профиль успешно обновлен!" : "Произошла ошибка при обновлении профиля.";
+                                    eventLiveData.setValue(message);
+                                },
+                                throwable -> {
+                                    errorLiveData.setValue("Ошибка обновления профиля: " + throwable.getMessage());
+                                }
                         )
         );
     }

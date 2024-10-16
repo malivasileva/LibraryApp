@@ -8,7 +8,7 @@ public interface ReaderRepository {
     public Single<Reader> getReaderWithId(int card);
     Single<Reader> getReader();
 
-    public void updateReader(Reader reader);
+    public Single<Boolean> updateReader(Reader reader);
 
-    public void deleteReader(int card);
+    public Single<Boolean> deleteReader(int card);
 }

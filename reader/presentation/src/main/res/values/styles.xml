@@ -6,4 +6,9 @@
         <item name="android:padding">8dp</item>
         <item name="android:textSize">20sp</item><!-- Внутренний отступ -->
     </style>
+
+    <style name="ImageButtonStyle">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="cornerRadius">25dp</item>
+    </style>
 </resources>
