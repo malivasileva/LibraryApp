@@ -2,10 +2,11 @@ package com.malivasileva.domain.repositories;
 
 import com.malivasileva.domain.model.Lending;
 
-import java.sql.SQLException;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public interface LendingRepository {
-    public List<Lending> getAllLendingsFor(int readerId);
-    public List<Lending> getCurrentLendingsFor(int readerId);
+    public Single<List<Lending>> getAllLendings();
+    public Single<List<Lending>> getCurrentLendings();
 }

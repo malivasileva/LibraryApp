@@ -44,30 +44,69 @@ public class DatabaseService {
         });
     }
 
-    public List<LendingEntity> getLendingsFor(int reader) throws SQLException {
-        List<LendingEntity> lendings = new ArrayList<LendingEntity>();
+    public Single<List<LendingEntity>> getLendingsFor(long reader) {
+        return Single.fromCallable(() -> {
+            List<LendingEntity> lendings = new ArrayList<LendingEntity>();
+            String query = "SELECT L.lending_num, B.title, B.authors, L.lending_date, L.required_return_date, L.fact_return_date " +
+                    "FROM book_lendings L, books B " +
+                    "WHERE card_num = ? and L.book_num = B.book_num " +
+                    "ORDER BY lending_date DESC";
 
-        String query = "SELECT * FROM lendings WHERE card_num = " + reader;
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+                statement.setLong(1, reader);
 
-            while (resultSet.next()) {
-                // Создаем объект Book из данных, полученных из базы данных
-                LendingEntity lending = new LendingEntity(
-                        resultSet.getInt("lending_num"),
-                        resultSet.getInt("book_num"),
-                        resultSet.getInt("card_num"),
-                        resultSet.getDate("start_date"),
-                        resultSet.getDate("required_date"),
-                        resultSet.getDate("return_date")
-                );
-                lendings.add(lending);
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    // Создаем объект Book из данных, полученных из базы данных
+                    LendingEntity lending = new LendingEntity(
+                            resultSet.getInt("lending_num"),
+                            resultSet.getString("title"),
+                            resultSet.getString("authors"),
+                            resultSet.getDate("lending_date"),
+                            resultSet.getDate("required_return_date"),
+                            resultSet.getDate("fact_return_date")
+                    );
+                    lendings.add(lending);
+                }
             }
-        }
+            return lendings;
+        });
+    }
 
-        return lendings;
+    public Single<List<LendingEntity>> getCurrentLendingsFor(long reader) {
+        return Single.fromCallable(() -> {
+            List<LendingEntity> lendings = new ArrayList<LendingEntity>();
+            String query = "SELECT L.lending_num, B.title, B.authors, L.lending_date, L.required_return_date, L.fact_return_date " +
+                    "FROM book_lendings L, books B " +
+                    "WHERE card_num = ? and L.book_num = B.book_num and L.fact_return_date is null " +
+                    "ORDER BY lending_date DESC";
+
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setLong(1, reader);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    // Создаем объект Book из данных, полученных из базы данных
+                    LendingEntity lending = new LendingEntity(
+                            resultSet.getInt("lending_num"),
+                            resultSet.getString("title"),
+                            resultSet.getString("authors"),
+                            resultSet.getDate("lending_date"),
+                            resultSet.getDate("required_return_date"),
+                            null
+                    );
+                    lendings.add(lending);
+                }
+            }
+            return lendings;
+        });
+
     }
 
     public Single<ReaderEntity> getReader(long id) {

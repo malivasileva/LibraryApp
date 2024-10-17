@@ -2,7 +2,6 @@ package com.malivasileva.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -21,7 +20,6 @@ public class SharedPrefUserStorage implements UserStorage {
 
     @Override
     public void saveId(Long id) {
-        Log.d("govno-shared", "in save Id: " + id.toString());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(USER_ID, id);
         editor.apply();
@@ -30,7 +28,6 @@ public class SharedPrefUserStorage implements UserStorage {
     @Override
     public Long getId() {
         Long tmp = sharedPreferences.getLong(USER_ID, -1);
-        Log.d("govno-shared", "in get Id: " + tmp.toString());
         return tmp;
     }
 

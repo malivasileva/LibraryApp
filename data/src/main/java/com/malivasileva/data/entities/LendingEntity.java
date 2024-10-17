@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class LendingEntity {
     private int id;
-    private int bookId;
-    private int readerId;
+    private String title;
+    private String authors;
     private Date startDate;
     private Date requiredDate;
     private Date returnedDate;
 
-    public LendingEntity(int id, int bookId, int readerId, Date startDate, Date requiredDate, Date returnedDate) {
+    public LendingEntity(int id, String title, String authors, Date startDate, Date requiredDate, Date returnedDate) {
         this.id = id;
-        this.bookId = bookId;
-        this.readerId = readerId;
+        this.title = title;
+        this.authors = authors;
         this.startDate = startDate;
         this.requiredDate = requiredDate;
         this.returnedDate = returnedDate;
@@ -35,11 +35,11 @@ public class LendingEntity {
         return startDate;
     }
 
-    public int getBookId() {
-        return bookId;
+    public String getTitle() {
+        return title;
     }
 
-    public int getReaderId() {
-        return readerId;
+    public String getAuthors() {
+        return authors;
     }
 }

@@ -4,10 +4,10 @@
     <string name="r_lendings">Выдачи</string>
     <string name="r_books">Книги</string>
     <string name="r_profile">Профиль</string>
-    <string name="r_greetings">Добро пожаловать!</string>
-    <string name="return_before">Вернуть до:</string>
-    <string name="lend_date">Выдано:</string>
-    <string name="returned">Возвращено:</string>
+    <string name="books_on_hands">Книги на руках</string>
+    <string name="return_before">Вернуть до: </string>
+    <string name="lend_date">Выдано: </string>
+    <string name="returned">Возвращено: </string>
     <string name="delete_profile">Удалить профиль</string>
     <string name="exit">Выйти</string>
     <string name="address">Адрес</string>
@@ -18,8 +18,9 @@
     <string name="mock_phone">79998885566</string>
     <string name="mock_name">Name</string>
     <string name="mock_card">1</string>
-    <string name="pages_in_book">Страниц в книге:</string>
+    <string name="pages_in_book">Страниц в книге: </string>
     <string name="search_books">Название или автор</string>
     <string name="amount_of_books">"Экземпляров: "</string>
     <string name="edit_or_save_field">Изменить данные</string>
+    <string name="required_date">Вернуть до: </string>
 </resources>

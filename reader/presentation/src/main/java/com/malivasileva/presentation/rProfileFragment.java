@@ -3,10 +3,6 @@ package com.malivasileva.presentation;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -73,21 +72,6 @@ public class rProfileFragment extends Fragment {
                     }
                 });
 
-
-        /*// Наблюдение за errorLiveData
-        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) {
-                // Показ ошибки пользователю (например, через Toast)
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewModel.getEventLiveData().observe(getViewLifecycleOwner(), event -> {
-            if (event != null) {
-                Toast.makeText(requireContext(), event, Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
         editNameButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -133,7 +117,7 @@ public class rProfileFragment extends Fragment {
         if (!currentName.equals(initialName) || !currentPhone.equals(initialPhone) || !currentAddress.equals(initialAddress)) {
 
             new AlertDialog.Builder(requireContext())
-                    .setTitle("Изменение данных профиля")
+                    .setTitle("Подтверждение")
                     .setMessage("Вы хотите сохранить изменения?")
                     .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                         @Override
@@ -151,7 +135,6 @@ public class rProfileFragment extends Fragment {
                     })
                     .create()
                     .show();
-//                    viewModel.updateProfile(currentName, currentPhone, currentAddress);
         }
     }
 }

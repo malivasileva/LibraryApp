@@ -16,22 +16,26 @@
         <TextView
             android:id="@+id/book_num"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style ="@style/TextViewStyle"/>
 
         <TextView
             android:id="@+id/book_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style ="@style/TextViewStyle"/>
 
         <TextView
             android:id="@+id/book_author"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style ="@style/TextViewStyle"/>
 
         <TextView
             android:id="@+id/book_year"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style ="@style/TextViewStyle"/>
 
 
         <LinearLayout
@@ -42,11 +46,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pages_in_book"/>
+                android:text="@string/pages_in_book"
+                style ="@style/TextViewStyle"/>
             <TextView
                 android:id="@+id/book_page"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_small"
+                style ="@style/TextViewStyle"/>
 
         </LinearLayout>
 
@@ -58,12 +65,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/amount_of_books"/>
+                android:text="@string/amount_of_books"
+                style ="@style/TextViewStyle"/>
 
             <TextView
                 android:id="@+id/book_amount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_small"
+                style ="@style/TextViewStyle"/>
         </LinearLayout>
 
     </LinearLayout>

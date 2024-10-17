@@ -1,15 +1,11 @@
 package com.malivasileva.presentation;
 
-import static dagger.hilt.android.internal.Contexts.getApplication;
-
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.malivasileva.domain.model.Book;
+import com.malivasileva.domain.model.Lending;
 import com.malivasileva.domain.model.Reader;
 import com.malivasileva.domain.usecases.DeleteProfileUseCase;
 import com.malivasileva.domain.usecases.GetAllLendingsUseCase;
@@ -42,6 +38,8 @@ public class ReaderViewModel extends ViewModel {
     private final MutableLiveData<List<Book>> booksLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> eventLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Lending>> lendingsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Lending>> currentLendingsLiveData = new MutableLiveData<>();
     private final CompositeDisposable disposables = new CompositeDisposable();  // Для управления подписками
 
     @Inject
@@ -53,7 +51,6 @@ public class ReaderViewModel extends ViewModel {
         this.saveProfileUseCase = saveProfileUseCase;
         this.deleteProfileUseCase = deleteProfileUseCase;
 
-        Log.d("govno-viewmodel", "in constructor");
         getProfile();
     }
 
@@ -70,6 +67,10 @@ public class ReaderViewModel extends ViewModel {
     }
 
     public LiveData<String> getEventLiveData() { return eventLiveData; }
+
+    public LiveData<List<Lending>> getLendingsLiveData() { return lendingsLiveData; }
+
+    public LiveData<List<Lending>> getCurrentLendingsLiveData() { return currentLendingsLiveData; }
 
     public void searchBooks(String query) {
         disposables.add(
@@ -120,6 +121,39 @@ public class ReaderViewModel extends ViewModel {
                                 },
                                 throwable -> {
                                     errorLiveData.setValue("Ошибка обновления профиля: " + throwable.getMessage());
+                                }
+                        )
+        );
+    }
+
+    public void getLendings() {
+        disposables.add(
+                getAllLendingsUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                lendings -> {
+                                    lendingsLiveData.setValue(lendings);
+                                },
+                                throwable -> {
+                                    errorLiveData.setValue("Ошибка получения данных");
+                                }
+
+                        )
+        );
+    }
+
+    public void getCurrentLendings() {
+        disposables.add(
+                getCurrentLendingsUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                lendings -> {
+                                    currentLendingsLiveData.setValue(lendings);
+                                },
+                                throwable -> {
+                                    errorLiveData.setValue("Ошибка получения данных");
                                 }
                         )
         );

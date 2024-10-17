@@ -5,6 +5,8 @@ import com.malivasileva.domain.repositories.LendingRepository;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public class GetAllLendingsUseCase {
     LendingRepository lendingRepository;
 
@@ -12,7 +14,7 @@ public class GetAllLendingsUseCase {
         this.lendingRepository = lendingRepository;
     }
 
-    public List<Lending> execute(int readerId) {
-        return lendingRepository.getAllLendingsFor(readerId);
+    public Single<List<Lending>> execute() {
+        return lendingRepository.getAllLendings();
     }
 }

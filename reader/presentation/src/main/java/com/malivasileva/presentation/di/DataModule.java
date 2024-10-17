@@ -38,8 +38,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public LendingRepository provideLendingRepository(DatabaseService databaseService) {
-        return new LendingsRepositoryImpl(databaseService);
+    public LendingRepository provideLendingRepository(DatabaseService databaseService, UserStorage userStorage) {
+        return new LendingsRepositoryImpl(databaseService, userStorage);
     }
 
     @Provides

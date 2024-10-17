@@ -1,7 +1,5 @@
 package com.malivasileva.data.repository;
 
-import android.util.Log;
-
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.entities.BookEntity;
 import com.malivasileva.domain.model.Book;
@@ -28,7 +26,6 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Single<List<Book>> getBooksFor(String query) {
-//        Log.d("govno-repoimpl", "bless me god");
         return databaseService.getBooksFor(query)
                 .map(bookEntities -> bookEntities.stream()
                         .map(this::mapEntityToModel)

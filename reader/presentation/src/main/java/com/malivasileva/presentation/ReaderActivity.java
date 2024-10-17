@@ -19,14 +19,16 @@ public class ReaderActivity extends AppCompatActivity {
 
     RMainBinding binding;
 
-//    @Inject
-//    ViewModelProvider.Factory viewModelFactory;
     private ReaderViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(ReaderViewModel.class);
+        viewModel.getLendings();
+        viewModel.getCurrentLendings();
 
         binding = RMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -46,12 +48,8 @@ public class ReaderActivity extends AppCompatActivity {
             return true;
         });
 
-        viewModel = new ViewModelProvider(this).get(ReaderViewModel.class);
-
-        // Наблюдение за errorLiveData
         viewModel.getErrorLiveData().observe(this, error -> {
             if (error != null) {
-                // Показ ошибки пользователю (например, через Toast)
                 Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -61,11 +59,6 @@ public class ReaderActivity extends AppCompatActivity {
                 Toast.makeText(this, event, Toast.LENGTH_SHORT).show();
             }
         });
-
-//        readerViewModel = new ViewModelProvider(this).get(ReaderViewModel.class);
-
-
-
     }
 
     private void replaceFragment (Fragment fragment){

@@ -12,9 +12,10 @@
         android:layout_margin="@dimen/padding_small"
         >
         <TextView
+            android:id="@+id/test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/r_greetings"
+            android:text="@string/books_on_hands"
             android:layout_margin="@dimen/padding_small"
             android:textSize="@dimen/text_large"
             android:textColor="@color/black"
