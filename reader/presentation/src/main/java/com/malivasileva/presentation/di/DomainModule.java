@@ -4,6 +4,7 @@ import com.malivasileva.domain.repositories.BookRepository;
 import com.malivasileva.domain.repositories.LendingRepository;
 import com.malivasileva.domain.repositories.ReaderRepository;
 import com.malivasileva.domain.usecases.DeleteProfileUseCase;
+import com.malivasileva.domain.usecases.ExitUseCase;
 import com.malivasileva.domain.usecases.GetAllLendingsUseCase;
 import com.malivasileva.domain.usecases.GetCurrentLendingsUseCase;
 import com.malivasileva.domain.usecases.GetProfileUseCase;
@@ -18,6 +19,12 @@ import dagger.hilt.android.components.ViewModelComponent;
 @Module
 @InstallIn(ViewModelComponent.class)
 public class DomainModule {
+
+    @Provides
+    public ExitUseCase provideExitUseCase (ReaderRepository readerRepository) {
+        return new ExitUseCase(readerRepository);
+    }
+
     @Provides
     public DeleteProfileUseCase provideDeleteProfileUseCase (ReaderRepository readerRepository) {
         return new DeleteProfileUseCase(readerRepository);

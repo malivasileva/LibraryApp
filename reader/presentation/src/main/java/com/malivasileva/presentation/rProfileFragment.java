@@ -2,6 +2,7 @@ package com.malivasileva.presentation;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,6 +92,68 @@ public class rProfileFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 addressEt.setEnabled(isChecked);
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Выйти из профиля?")
+                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.exit();
+                                dialog.dismiss();
+
+                                Intent intent = new Intent();
+                                intent.setClassName(requireActivity().getPackageName(), "com.malivasileva.libraryapp.MainActivity"); // Полное имя класса активности
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                requireActivity().finish();
+                            }
+                        })
+                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
+                LayoutInflater inflater = requireActivity().getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.dialog_edit_text, null);
+
+                EditText editText = dialogView.findViewById(R.id.edit_text_input);
+
+                builder.setView(dialogView)
+                        .setTitle("Подтверждение удаления")
+                        .setMessage("Введите 'Я хочу удалить профиль' для подтверждения")
+                        .setPositiveButton("Удалить", (dialog, which) -> {
+                            String inputText = editText.getText().toString();
+                            if ("Я хочу удалить профиль".equals(inputText)) {
+                                viewModel.deleteProfile();
+                                Intent intent = new Intent();
+                                intent.setClassName(requireActivity().getPackageName(), "com.malivasileva.libraryapp.MainActivity"); // Полное имя класса активности
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                requireActivity().finish();
+                            } else {
+                                Toast.makeText(requireContext(), "Неверная фраза для удаления", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Отмена", (dialog, which) -> {
+                            dialog.dismiss();
+                        });
+                builder.create().show();
             }
         });
 

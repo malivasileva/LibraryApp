@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class DatabaseService {
@@ -161,7 +162,24 @@ public class DatabaseService {
                 });
     }
 
-    public void deleteReader(int card) {
-        //todo
+    public Single<Boolean> deleteReader(long card) {
+        return Single.create(emitter -> {
+            String query = "DELETE FROM public.readers " +
+                    "WHERE card_num = ?";
+            try (Connection connection = DatabaseConnection.getReaderConnection();
+            PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setLong(1, card);
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    emitter.onSuccess(true);
+                } else {
+                    emitter.onSuccess(false);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                emitter.onError(e);
+            }
+        });
     }
 }

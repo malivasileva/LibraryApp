@@ -1,11 +1,14 @@
 package com.malivasileva.data.repository;
 
+import static io.reactivex.rxjava3.core.Completable.fromAction;
+
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.entities.ReaderEntity;
 import com.malivasileva.domain.model.Reader;
 import com.malivasileva.domain.repositories.ReaderRepository;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class ReaderRepositoryImpl implements ReaderRepository {
@@ -60,9 +63,14 @@ public class ReaderRepositoryImpl implements ReaderRepository {
     }
 
     @Override
-    public Single<Boolean> deleteReader(int card) {
-        return Single.create(emitter -> {
-            emitter.onSuccess(true);
+    public Single<Boolean> deleteReader() {
+        return databaseService.deleteReader(userStorage.getId());
+    }
+
+    @Override
+    public Completable exit() {
+        return Completable.fromAction(() -> {
+            userStorage.deleteId();
         });
     }
 

@@ -8,6 +8,7 @@ import com.malivasileva.domain.model.Book;
 import com.malivasileva.domain.model.Lending;
 import com.malivasileva.domain.model.Reader;
 import com.malivasileva.domain.usecases.DeleteProfileUseCase;
+import com.malivasileva.domain.usecases.ExitUseCase;
 import com.malivasileva.domain.usecases.GetAllLendingsUseCase;
 import com.malivasileva.domain.usecases.GetCurrentLendingsUseCase;
 import com.malivasileva.domain.usecases.GetProfileUseCase;
@@ -32,6 +33,7 @@ public class ReaderViewModel extends ViewModel {
     private final GetProfileUseCase getProfileUseCase;
     private final SaveProfileUseCase saveProfileUseCase;
     private final DeleteProfileUseCase deleteProfileUseCase;
+    private final ExitUseCase exitUseCase;
 
     private final MutableLiveData<Reader> profileLiveData = new MutableLiveData<>();
 
@@ -43,13 +45,14 @@ public class ReaderViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();  // Для управления подписками
 
     @Inject
-    public ReaderViewModel(GetAllLendingsUseCase getAllLendingsUseCase, GetCurrentLendingsUseCase getCurrentLendingsUseCase, SearchBookUseCase searchBookUseCase, GetProfileUseCase getProfileUseCase, SaveProfileUseCase saveProfileUseCase, DeleteProfileUseCase deleteProfileUseCase) {
+    public ReaderViewModel(GetAllLendingsUseCase getAllLendingsUseCase, GetCurrentLendingsUseCase getCurrentLendingsUseCase, SearchBookUseCase searchBookUseCase, GetProfileUseCase getProfileUseCase, SaveProfileUseCase saveProfileUseCase, DeleteProfileUseCase deleteProfileUseCase, ExitUseCase exitUseCase) {
         this.getAllLendingsUseCase = getAllLendingsUseCase;
         this.getCurrentLendingsUseCase = getCurrentLendingsUseCase;
         this.searchBookUseCase = searchBookUseCase;
         this.getProfileUseCase = getProfileUseCase;
         this.saveProfileUseCase = saveProfileUseCase;
         this.deleteProfileUseCase = deleteProfileUseCase;
+        this.exitUseCase = exitUseCase;
 
         getProfile();
     }
@@ -154,6 +157,32 @@ public class ReaderViewModel extends ViewModel {
                                 },
                                 throwable -> {
                                     errorLiveData.setValue("Ошибка получения данных");
+                                }
+                        )
+        );
+    }
+
+    public void exit() {
+        disposables.add(
+                exitUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe()
+        );
+    }
+
+    public void deleteProfile() {
+        disposables.add(
+                deleteProfileUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                result -> {
+                                    if (result) {
+                                        eventLiveData.setValue("Профиль успешно удален!");
+                                    } else {
+                                        errorLiveData.setValue("Произошла ошибка при удалении профиля.");
+                                    }
                                 }
                         )
         );

@@ -2,6 +2,8 @@ package com.malivasileva.domain.usecases;
 
 import com.malivasileva.domain.repositories.ReaderRepository;
 
+import io.reactivex.rxjava3.core.Single;
+
 public class DeleteProfileUseCase {
     private final ReaderRepository readerRepository;
 
@@ -9,7 +11,7 @@ public class DeleteProfileUseCase {
         this.readerRepository = readerRepository;
     }
 
-    public void execute(int card) {
-        readerRepository.deleteReader(card);
+    public Single<Boolean> execute() {
+        return readerRepository.deleteReader();
     }
 }
