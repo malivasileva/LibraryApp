@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.malivasileva.presentation.ReaderActivity"
+        <activity android:name="com.malivasileva.reader.presentation.ReaderActivity"
             android:exported="true">
 
         </activity>

@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.malivasileva.libraryapp.model.Reader;
-import com.malivasileva.presentation.ReaderActivity;
+import com.malivasileva.reader.presentation.ReaderActivity;
 
 
 public class SignupActivity extends AppCompatActivity {

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.malivasileva.presentation'
+    namespace 'com.malivasileva.reader.presentation'
     compileSdk 34
 
     defaultConfig {
@@ -32,7 +32,8 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":reader:domain"))
-    implementation(project(":resources"))
+    implementation implementation(project(':resources',))
+    implementation project(":model")
 
     implementation 'com.github.csdodd:ToggleImageButton:e8f5907de8'
 

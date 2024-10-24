@@ -3,12 +3,12 @@ package com.malivasileva.data.entities;
 import java.util.Date;
 
 public class LendingEntity {
-    private int id;
-    private String title;
-    private String authors;
-    private Date startDate;
-    private Date requiredDate;
-    private Date returnedDate;
+    private final int id;
+    private final String title;
+    private final String authors;
+    private final Date startDate;
+    private final Date requiredDate;
+    private final Date returnedDate;
 
     public LendingEntity(int id, String title, String authors, Date startDate, Date requiredDate, Date returnedDate) {
         this.id = id;

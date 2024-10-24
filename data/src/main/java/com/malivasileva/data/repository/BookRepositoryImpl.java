@@ -2,8 +2,9 @@ package com.malivasileva.data.repository;
 
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.entities.BookEntity;
-import com.malivasileva.domain.model.Book;
-import com.malivasileva.domain.repositories.BookRepository;
+import com.malivasileva.model.Book;
+import com.malivasileva.reader.domain.repositories.BookRepository;
+import com.malivasileva.librarian.domain.repositories.LibrBookRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class BookRepositoryImpl implements BookRepository {
+public class BookRepositoryImpl implements BookRepository, LibrBookRepository {
     private final DatabaseService databaseService;
 
     public BookRepositoryImpl(DatabaseService databaseService) {

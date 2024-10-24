@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/padding_small"
-    tools:context="com.malivasileva.presentation.rLendingsFragment">
+    tools:context=".rLendingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

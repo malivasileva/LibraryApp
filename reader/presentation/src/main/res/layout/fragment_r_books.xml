@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/padding_small"
-    tools:context="com.malivasileva.presentation.rBooksFragment">
+    tools:context=".rBooksFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

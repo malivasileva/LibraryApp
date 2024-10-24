@@ -1,17 +1,18 @@
 package com.malivasileva.data.repository;
 
-import static io.reactivex.rxjava3.core.Completable.fromAction;
-
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.entities.ReaderEntity;
-import com.malivasileva.domain.model.Reader;
-import com.malivasileva.domain.repositories.ReaderRepository;
+import com.malivasileva.model.Reader;
+import com.malivasileva.librarian.domain.repositories.LibrReaderRepository;
+import com.malivasileva.reader.domain.repositories.ReaderRepository;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
-public class ReaderRepositoryImpl implements ReaderRepository {
+public class ReaderRepositoryImpl implements ReaderRepository, LibrReaderRepository {
 
     DatabaseService databaseService;
     UserStorage userStorage;
@@ -33,6 +34,11 @@ public class ReaderRepositoryImpl implements ReaderRepository {
                             "00000000",
                             "UNKNOWN");
                 });
+    }
+
+    @Override
+    public Single<List<Reader>> getAllReaders() {
+        return null; //todo
     }
 
     @Override
@@ -68,11 +74,23 @@ public class ReaderRepositoryImpl implements ReaderRepository {
     }
 
     @Override
+    public Single<List<Reader>> getActiveReaders() {
+        return null; //todo
+    }
+
+    @Override
+    public Single<List<Reader>> getReadersFor(String query) {
+        return null; //todo
+    }
+
+    @Override
     public Completable exit() {
         return Completable.fromAction(() -> {
             userStorage.deleteId();
         });
     }
+
+
 
     private Reader mapEntityToModel(ReaderEntity entity) {
         return new Reader(
