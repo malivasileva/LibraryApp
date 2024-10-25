@@ -1,10 +1,12 @@
-package com.malivasileva.presentation.di;
+package com.malivasileva.librarian.presentation.di;
 
 import android.content.Context;
 
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.SharedPrefUserStorage;
 import com.malivasileva.data.UserStorage;
+import com.malivasileva.data.repository.LibrarianRepositoryImpl;
+import com.malivasileva.librarian.domain.repositories.LibrarianRepository;
 
 import javax.inject.Singleton;
 
@@ -18,4 +20,9 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class DataModule {
 
+    @Provides
+    @Singleton
+    public LibrarianRepository provideLibrarianRepository(UserStorage userStorage) {
+        return new LibrarianRepositoryImpl(userStorage);
+    }
 }

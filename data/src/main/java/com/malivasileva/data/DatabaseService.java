@@ -14,6 +14,8 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
+
+//todo LIBRARIAN CONNECTION
 public class DatabaseService {
 
     public Single<List<BookEntity>> getBooksFor(String request) {

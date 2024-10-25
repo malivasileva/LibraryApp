@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.malivasileva.data.UserStorage;
-import com.malivasileva.presentation.LibrarianActivity;
+import com.malivasileva.librarian.presentation.LibrarianActivity;
 import com.malivasileva.reader.presentation.ReaderActivity;
 
 import javax.inject.Inject;
