@@ -6,7 +6,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
-public interface LendingRepository {
+public interface ReaderLendingRepository {
     public Single<List<Lending>> getAllLendings();
     public Single<List<Lending>> getCurrentLendings();
 }

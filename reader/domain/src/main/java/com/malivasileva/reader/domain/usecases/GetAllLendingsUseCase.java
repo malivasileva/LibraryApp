@@ -1,16 +1,16 @@
 package com.malivasileva.reader.domain.usecases;
 
 import com.malivasileva.model.Lending;
-import com.malivasileva.reader.domain.repositories.LendingRepository;
+import com.malivasileva.reader.domain.repositories.ReaderLendingRepository;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
 public class GetAllLendingsUseCase {
-    LendingRepository lendingRepository;
+    ReaderLendingRepository lendingRepository;
 
-    public GetAllLendingsUseCase(LendingRepository lendingRepository) {
+    public GetAllLendingsUseCase(ReaderLendingRepository lendingRepository) {
         this.lendingRepository = lendingRepository;
     }
 

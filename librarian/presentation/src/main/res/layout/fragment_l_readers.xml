@@ -3,12 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.malivasileva.librarian.presentation.lReadersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="libr readers" />
+        >
+
+        <SearchView
+            android:id="@+id/search_readers"
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:layout_marginVertical="@dimen/padding_mid"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="@string/search_readers"
+            android:layout_marginBottom="@dimen/padding_small"/>
+
+        <TextView
+            android:id="@+id/reader_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="@dimen/padding_mid"
+            app:layout_constraintTop_toBottomOf="@id/search_readers"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/rv_placeholder"
+            android:textSize="@dimen/text_large"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/readers_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_readers"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/background"
+            android:backgroundTint="@color/background"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </FrameLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pages_in_book">Страниц в книге: </string>
+    <string name="search_books">Название или автор</string>
+    <string name="amount_of_books">"Экземпляров: "</string>
+    <string name="return_before">Вернуть до: </string>
+    <string name="lend_date">Выдано: </string>
+    <string name="required_date">Вернуть до: </string>
+    <string name="returned">Возвращено: </string>
+
+</resources>

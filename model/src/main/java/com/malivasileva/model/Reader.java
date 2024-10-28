@@ -1,19 +1,19 @@
 package com.malivasileva.model;
 
 public class Reader {
-    private int card;
+    private long card;
     private String name;
     private String phone;
     private String address;
 
-    public Reader(int card, String name, String phone, String address) {
+    public Reader(long card, String name, String phone, String address) {
         this.card = card;
         this.name = name;
         this.phone = phone;
         this.address = address;
     }
 
-    public int getCard() {
+    public long getCard() {
         return card;
     }
 

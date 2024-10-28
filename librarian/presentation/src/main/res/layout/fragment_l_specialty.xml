@@ -3,12 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.malivasileva.librarian.presentation.lSpecialtyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="libr spec" />
+        >
+        <SearchView
+            android:id="@+id/search_specialty"
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:layout_marginVertical="@dimen/padding_mid"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="@string/search_specialty"
+            android:layout_marginBottom="@dimen/padding_small"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/specialty_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/search_specialty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/background"
+            android:backgroundTint="@color/background"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </FrameLayout>

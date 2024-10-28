@@ -1,16 +1,16 @@
 package com.malivasileva.reader.domain.usecases;
 
 import com.malivasileva.model.Book;
-import com.malivasileva.reader.domain.repositories.BookRepository;
+import com.malivasileva.reader.domain.repositories.ReaderBookRepository;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
 public class SearchBookUseCase {
-    BookRepository bookRepository;
+    ReaderBookRepository bookRepository;
 
-    public SearchBookUseCase(BookRepository bookRepository) {
+    public SearchBookUseCase(ReaderBookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 

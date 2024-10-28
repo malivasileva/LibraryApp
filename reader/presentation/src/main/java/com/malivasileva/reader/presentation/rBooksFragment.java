@@ -74,16 +74,13 @@ public class rBooksFragment extends Fragment {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
 //                        loadBooks(query);
-                        Log.d("govno-fragment", "in submit listener");
                         viewModel.searchBooks(query);
-                        Log.d("govno-fragment", "in submit listener but finished");
                         searchView.clearFocus();
                         return true;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        Log.d("govno-fragment", "in chenged listener");
                         return false;
                     }
                 });

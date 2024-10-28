@@ -7,6 +7,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public interface LibrLendingRepository {
-    public Single<List<Lending>> getLendingsForBookWith(int num);
-    public Single<List<Lending>> getAllCurrentLendings();
+    Single<List<Lending>> getLendingsForBookWith(int num);
+    Single<List<Lending>> getAllCurrentLendings();
+    Single<List<Lending>> getExpiredLendings();
 }

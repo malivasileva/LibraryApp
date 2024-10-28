@@ -1,7 +1,7 @@
 package com.malivasileva.reader.presentation.di;
 
-import com.malivasileva.reader.domain.repositories.BookRepository;
-import com.malivasileva.reader.domain.repositories.LendingRepository;
+import com.malivasileva.reader.domain.repositories.ReaderBookRepository;
+import com.malivasileva.reader.domain.repositories.ReaderLendingRepository;
 import com.malivasileva.reader.domain.repositories.ReaderRepository;
 import com.malivasileva.reader.domain.usecases.DeleteProfileUseCase;
 import com.malivasileva.reader.domain.usecases.ExitUseCase;
@@ -31,12 +31,12 @@ public class ReaderDomainModule {
     }
 
     @Provides
-    public GetAllLendingsUseCase provideGetAllLendingsUseCase (LendingRepository lendingRepository) {
+    public GetAllLendingsUseCase provideGetAllLendingsUseCase (ReaderLendingRepository lendingRepository) {
         return new GetAllLendingsUseCase(lendingRepository);
     }
 
     @Provides
-    public GetCurrentLendingsUseCase provideGetCurrentLendingsUseCase (LendingRepository lendingRepository) {
+    public GetCurrentLendingsUseCase provideGetCurrentLendingsUseCase (ReaderLendingRepository lendingRepository) {
         return new GetCurrentLendingsUseCase(lendingRepository);
     }
 
@@ -51,7 +51,7 @@ public class ReaderDomainModule {
     }
 
     @Provides
-    public SearchBookUseCase provideSearchBookUseCase (BookRepository bookRepository) {
+    public SearchBookUseCase provideSearchBookUseCase (ReaderBookRepository bookRepository) {
         return new SearchBookUseCase(bookRepository);
     }
 }

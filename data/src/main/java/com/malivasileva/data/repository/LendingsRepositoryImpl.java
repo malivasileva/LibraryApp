@@ -4,7 +4,7 @@ import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.entities.LendingEntity;
 import com.malivasileva.model.Lending;
-import com.malivasileva.reader.domain.repositories.LendingRepository;
+import com.malivasileva.reader.domain.repositories.ReaderLendingRepository;
 import com.malivasileva.librarian.domain.repositories.LibrLendingRepository;
 
 import java.util.Collections;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class LendingsRepositoryImpl implements LendingRepository, LibrLendingRepository {
+public class LendingsRepositoryImpl implements ReaderLendingRepository {
 
     DatabaseService databaseService;
     UserStorage userStorage;
@@ -57,15 +57,5 @@ public class LendingsRepositoryImpl implements LendingRepository, LibrLendingRep
                 entity.getStartDate(),
                 entity.getRequiredDate(),
                 entity.getReturnedDate());
-    }
-
-    @Override
-    public Single<List<Lending>> getLendingsForBookWith(int num) {
-        return null; //todo
-    }
-
-    @Override
-    public Single<List<Lending>> getAllCurrentLendings() {
-        return null; //todo
     }
 }

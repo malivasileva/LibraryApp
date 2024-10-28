@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.malivasileva.model.Lending;
-import com.malivasileva.reader.presentation.R;
+import com.malivasileva.resources.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

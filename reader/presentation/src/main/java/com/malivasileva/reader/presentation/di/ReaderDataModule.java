@@ -5,8 +5,8 @@ import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.repository.BookRepositoryImpl;
 import com.malivasileva.data.repository.ReaderRepositoryImpl;
 import com.malivasileva.data.repository.LendingsRepositoryImpl;
-import com.malivasileva.reader.domain.repositories.BookRepository;
-import com.malivasileva.reader.domain.repositories.LendingRepository;
+import com.malivasileva.reader.domain.repositories.ReaderBookRepository;
+import com.malivasileva.reader.domain.repositories.ReaderLendingRepository;
 import com.malivasileva.reader.domain.repositories.ReaderRepository;
 
 import javax.inject.Singleton;
@@ -28,13 +28,13 @@ public class ReaderDataModule {
 
     @Provides
     @Singleton
-    public BookRepository provideBookRepository(DatabaseService databaseService) {
+    public ReaderBookRepository provideBookRepository(DatabaseService databaseService) {
         return new BookRepositoryImpl(databaseService);
     }
 
     @Provides
     @Singleton
-    public LendingRepository provideLendingRepository(DatabaseService databaseService, UserStorage userStorage) {
+    public ReaderLendingRepository provideLendingRepository(DatabaseService databaseService, UserStorage userStorage) {
         return new LendingsRepositoryImpl(databaseService, userStorage);
     }
 }

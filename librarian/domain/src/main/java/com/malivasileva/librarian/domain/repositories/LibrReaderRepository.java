@@ -8,9 +8,6 @@ import io.reactivex.rxjava3.core.Single;
 
 public interface LibrReaderRepository {
     Single<Reader> getReaderWithId(int card); // ???
-    Single<List<Reader>> getAllReaders();
-
-    Single<Boolean> deleteReader();
     Single<List<Reader>> getActiveReaders();
     Single<List<Reader>> getReadersFor(String query);
 }

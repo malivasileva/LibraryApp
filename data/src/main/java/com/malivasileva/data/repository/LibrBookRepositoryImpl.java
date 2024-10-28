@@ -1,9 +1,11 @@
 package com.malivasileva.data.repository;
 
+import android.provider.ContactsContract;
+
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.entities.BookEntity;
+import com.malivasileva.librarian.domain.repositories.LibrBookRepository;
 import com.malivasileva.model.Book;
-import com.malivasileva.reader.domain.repositories.ReaderBookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +13,13 @@ import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class BookRepositoryImpl implements ReaderBookRepository {
+public class LibrBookRepositoryImpl implements LibrBookRepository {
+
     private final DatabaseService databaseService;
 
-    public BookRepositoryImpl(DatabaseService databaseService) {
+    public LibrBookRepositoryImpl (DatabaseService databaseService) {
         this.databaseService = databaseService;
     }
-
     @Override
     public Single<List<Book>> getBooksFor(String query) {
         return databaseService.getBooksFor(query)

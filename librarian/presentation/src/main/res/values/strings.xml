@@ -6,4 +6,9 @@
     <string name="l_readers">Читатели</string>
     <string name="l_profile">Профиль</string>
     <string name="exit">Выйти</string>
+    <string name="search_lendings">Искать выдачи</string>
+    <string name="search_readers">Искать читателей</string>
+    <string name="search_specialty">Искать специальность</string>
+    <string name="search_books">Искать книги</string>
+    <string name="rv_placeholder">Введите поисковый запрос для получения данных</string>
 </resources>

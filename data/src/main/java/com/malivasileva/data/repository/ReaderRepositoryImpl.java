@@ -12,7 +12,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
-public class ReaderRepositoryImpl implements ReaderRepository, LibrReaderRepository {
+public class ReaderRepositoryImpl implements ReaderRepository {
 
     DatabaseService databaseService;
     UserStorage userStorage;
@@ -34,11 +34,6 @@ public class ReaderRepositoryImpl implements ReaderRepository, LibrReaderReposit
                             "00000000",
                             "UNKNOWN");
                 });
-    }
-
-    @Override
-    public Single<List<Reader>> getAllReaders() {
-        return null; //todo
     }
 
     @Override
@@ -71,16 +66,6 @@ public class ReaderRepositoryImpl implements ReaderRepository, LibrReaderReposit
     @Override
     public Single<Boolean> deleteReader() {
         return databaseService.deleteReader(userStorage.getId());
-    }
-
-    @Override
-    public Single<List<Reader>> getActiveReaders() {
-        return null; //todo
-    }
-
-    @Override
-    public Single<List<Reader>> getReadersFor(String query) {
-        return null; //todo
     }
 
     @Override

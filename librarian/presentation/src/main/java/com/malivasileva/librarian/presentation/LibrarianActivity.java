@@ -36,11 +36,9 @@ public class LibrarianActivity extends AppCompatActivity {
             long specialty = R.id.item_l_specialty;
             long lend = R.id.item_l_lendings;
             long readers = R.id.item_l_readers;
-            long profile = R.id.item_l_profile;
 
             if (id == lend) replaceFragment(new lLendingsFragment());
             else if (id == books) replaceFragment(new lBooksFragment());
-            else if (id == profile) replaceFragment(new lProfileFragment());
             else if (id == specialty) replaceFragment(new lSpecialtyFragment());
             else if (id == readers) replaceFragment(new lReadersFragment());
 

@@ -1,5 +1,7 @@
 package com.malivasileva.data;
 
+import android.util.Log;
+
 import com.malivasileva.data.entities.BookEntity;
 import com.malivasileva.data.entities.LendingEntity;
 import com.malivasileva.data.entities.ReaderEntity;
@@ -17,6 +19,42 @@ import io.reactivex.rxjava3.core.Single;
 
 //todo LIBRARIAN CONNECTION
 public class DatabaseService {
+
+    //todo lendingsRepo
+    //current lendings
+    //lendings for book
+    //todo libr-readers
+    //readers with active lendings
+    //reader with id ??
+    //search reader
+    //todo specialtiesRepo
+
+    public Single<List<ReaderEntity>> getReadersFor(String request) {
+        return Single.fromCallable(() -> {
+            List<ReaderEntity> readers = new ArrayList<>();
+            String query = "SELECT * FROM public.readers WHERE name ILIKE '%" + request + "%' OR phone ILIKE '%" + request + "%'";
+            try (Connection connection = DatabaseConnection.getLibrConnection();
+                 PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()
+            ) {
+                while (resultSet.next()) {
+                    ReaderEntity reader = new ReaderEntity(
+                            resultSet.getLong("card_num"),
+                            resultSet.getString("name"),
+                            resultSet.getString("phone"),
+                            resultSet.getString("address")
+                    );
+                    Log.d("govno-dbs", reader.getName());
+                    readers.add(reader);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+            return readers;
+        });
+    }
 
     public Single<List<BookEntity>> getBooksFor(String request) {
         return Single.fromCallable(() -> {

@@ -3,29 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.malivasileva.librarian.presentation.lBooksFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        >
         <SearchView
             android:id="@+id/search_book"
             android:layout_width="match_parent"
             android:layout_height="36sp"
+            android:layout_marginVertical="@dimen/padding_mid"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:hint="@string/search_books"
             android:layout_marginBottom="@dimen/padding_small"/>
+
+        <TextView
+            android:id="@+id/books_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="@dimen/padding_mid"
+            app:layout_constraintTop_toBottomOf="@id/search_book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/rv_placeholder"
+            android:textSize="@dimen/text_large"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/books_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:background="@color/background"
             android:backgroundTint="@color/background"
-            >
-        </androidx.recyclerview.widget.RecyclerView>
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_book"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

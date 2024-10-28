@@ -1,4 +1,4 @@
-package com.malivasileva.reader.presentation.adapters;
+package com.malivasileva.librarian.presentation.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,13 +7,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.malivasileva.resources.R;
 
 import com.malivasileva.model.Book;
-import com.malivasileva.resources.R;
 
 import java.util.List;
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder>{
+
     private List<Book> bookList;
 
     public BookAdapter(List<Book> bookList) {
