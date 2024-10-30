@@ -11,4 +11,12 @@
     <string name="search_specialty">Искать специальность</string>
     <string name="search_books">Искать книги</string>
     <string name="rv_placeholder">Введите поисковый запрос для получения данных</string>
+    <string name="get_active_readers">С книгами</string>
+    <string name="reader_num">Номер читательского билета</string>
+    <string name="reader_name">ФИО</string>
+    <string name="book_num">Номер книги</string>
+    <string name="book_name">Название</string>
+    <string name="book_authors">Авторы</string>
+    <string name="extend">Продлить</string>
+    <string name="return_book">Закрыть выдачу</string>
 </resources>

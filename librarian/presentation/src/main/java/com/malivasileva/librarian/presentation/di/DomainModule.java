@@ -6,18 +6,21 @@ import com.malivasileva.librarian.domain.repositories.LibrReaderRepository;
 import com.malivasileva.librarian.domain.repositories.LibrarianRepository;
 import com.malivasileva.librarian.domain.repositories.SpecialtyRepository;
 import com.malivasileva.librarian.domain.usecases.ExitLibrarianUseCase;
-import com.malivasileva.librarian.domain.usecases.GetExpiredLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.ExpandReturnDateUseCase;
+import com.malivasileva.librarian.domain.usecases.GetAllCurrentLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.GetAllSpecialtiesUseCase;
+import com.malivasileva.librarian.domain.usecases.GetLendingWithIdUseCase;
+import com.malivasileva.librarian.domain.usecases.GetReadersWithActiveLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.ReturnBookUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchBooksUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchReaderUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchSpecialtyUseCase;
-
-import javax.inject.Singleton;
+import com.malivasileva.librarian.domain.usecases.UpdateLendingUseCase;
 
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.components.ViewModelComponent;
-import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(ViewModelComponent.class)
@@ -44,7 +47,37 @@ public class DomainModule {
     }
 
     @Provides
-    public GetExpiredLendingsUseCase provideGetExpiredLendingsUseCase (LibrLendingRepository lendingRepository) {
-        return new GetExpiredLendingsUseCase(lendingRepository);
+    public GetAllSpecialtiesUseCase provideGetAllSpecialtiesUseCase (SpecialtyRepository specialtyRepository) {
+        return new GetAllSpecialtiesUseCase(specialtyRepository);
+    }
+
+    @Provides
+    public GetAllCurrentLendingsUseCase provideGetAllCurrentLendingsUseCase (LibrLendingRepository lendingRepository) {
+        return new GetAllCurrentLendingsUseCase(lendingRepository);
+    }
+
+    @Provides
+    public GetReadersWithActiveLendingsUseCase provideGetReadersWithActiveLendingsUseCase (LibrReaderRepository readerRepository) {
+        return new GetReadersWithActiveLendingsUseCase(readerRepository);
+    }
+
+    @Provides
+    public GetLendingWithIdUseCase provideGetLendingWithIdUseCase(LibrLendingRepository lendingRepository) {
+        return new GetLendingWithIdUseCase(lendingRepository);
+    }
+
+    @Provides
+    public UpdateLendingUseCase provideUpdateLendingUseCase(LibrLendingRepository lendingRepository) {
+        return new UpdateLendingUseCase(lendingRepository);
+    }
+
+    @Provides
+    public ReturnBookUseCase provideReturnBookUseCase (LibrLendingRepository lendingRepository) {
+        return new ReturnBookUseCase(lendingRepository);
+    }
+
+    @Provides
+    public ExpandReturnDateUseCase provideExpandReturnDateUseCase (LibrLendingRepository lendingRepository) {
+        return new ExpandReturnDateUseCase(lendingRepository);
     }
 }

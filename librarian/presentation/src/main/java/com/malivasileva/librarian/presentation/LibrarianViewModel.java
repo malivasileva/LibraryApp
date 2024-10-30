@@ -7,9 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.malivasileva.librarian.domain.usecases.ExitLibrarianUseCase;
-import com.malivasileva.librarian.domain.usecases.GetExpiredLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.GetAllCurrentLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.GetAllSpecialtiesUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchBooksUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchReaderUseCase;
+import com.malivasileva.librarian.domain.usecases.GetReadersWithActiveLendingsUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchSpecialtyUseCase;
 import com.malivasileva.model.Book;
 import com.malivasileva.model.Lending;
@@ -32,7 +34,9 @@ public class LibrarianViewModel extends ViewModel {
     private final SearchBooksUseCase searchBooksUseCase;
     private final SearchReaderUseCase searchReaderUseCase;
     private final SearchSpecialtyUseCase searchSpecialtyUseCase;
-    private final GetExpiredLendingsUseCase getExpiredLendingsUseCase;
+    private final GetAllSpecialtiesUseCase getAllSpecialtiesUseCase;
+    private final GetAllCurrentLendingsUseCase getAllCurrentLendingsUseCase;
+    private final GetReadersWithActiveLendingsUseCase getReadersWithActiveLendingsUseCase;
 
     private MutableLiveData<String> eventLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorLiveData = new MutableLiveData<>();
@@ -54,12 +58,19 @@ public class LibrarianViewModel extends ViewModel {
                               SearchBooksUseCase searchBooksUseCase,
                               SearchReaderUseCase searchReaderUseCase,
                               SearchSpecialtyUseCase searchSpecialtyUseCase,
-                              GetExpiredLendingsUseCase getExpiredLendingsUseCase) {
+                              GetAllSpecialtiesUseCase getAllSpecialtiesUseCase,
+                              GetAllCurrentLendingsUseCase getAllCurrentLendingsUseCase,
+                              GetReadersWithActiveLendingsUseCase getReadersWithActiveLendingsUseCase) {
         this.exitLibrarianUseCase = exitLibrarianUseCase;
         this.searchBooksUseCase = searchBooksUseCase;
         this.searchReaderUseCase = searchReaderUseCase;
         this.searchSpecialtyUseCase = searchSpecialtyUseCase;
-        this.getExpiredLendingsUseCase = getExpiredLendingsUseCase;
+        this.getAllSpecialtiesUseCase = getAllSpecialtiesUseCase;
+        this.getAllCurrentLendingsUseCase = getAllCurrentLendingsUseCase;
+        this.getReadersWithActiveLendingsUseCase = getReadersWithActiveLendingsUseCase;
+
+        getAllSpecialties();
+        getAllCurrentLendings();
     }
 
     public void exit() {
@@ -90,7 +101,6 @@ public class LibrarianViewModel extends ViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 readers -> {
-                                    Log.d("govno-viewModel", readers.get(0).getName());
                                     readersLiveData.setValue(readers);
                                     },
                                 throwable -> { errorLiveData.setValue("Ошибка поиска читателей: " + throwable.getMessage()); }
@@ -110,14 +120,40 @@ public class LibrarianViewModel extends ViewModel {
         );
     }
 
-    public void getExpiredLendings() {
+    public void getAllSpecialties() {
         disposables.add(
-                getExpiredLendingsUseCase.execute()
+                getAllSpecialtiesUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                specialties -> { specialtyLiveData.setValue(specialties); },
+                                throwable -> { errorLiveData.setValue("Ошибка поиска специальностей: " + throwable.getMessage()); }
+                        )
+        );
+    }
+
+    public void getAllCurrentLendings() {
+        disposables.add(
+                getAllCurrentLendingsUseCase.execute()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 lendings -> { lendingsLiveData.setValue(lendings); },
                                 throwable -> { errorLiveData.setValue("Ошибка поиска выдач: " + throwable.getMessage()); }
+                        )
+        );
+    }
+
+    public void getActiveReaders() {
+        disposables.add(
+                getReadersWithActiveLendingsUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                readers -> {
+                                    readersLiveData.setValue(readers);
+                                },
+                                throwable -> { errorLiveData.setValue("Ошибка поиска читателей: " + throwable.getMessage()); }
                         )
         );
     }

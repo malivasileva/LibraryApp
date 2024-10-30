@@ -7,10 +7,10 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class SearchReadersWithActiveLendingsUseCase {
+public class GetReadersWithActiveLendingsUseCase {
     private final LibrReaderRepository readerRepository;
 
-    public SearchReadersWithActiveLendingsUseCase(LibrReaderRepository readerRepository) {
+    public GetReadersWithActiveLendingsUseCase(LibrReaderRepository readerRepository) {
         this.readerRepository = readerRepository;
     }
 

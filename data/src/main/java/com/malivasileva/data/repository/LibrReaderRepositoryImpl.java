@@ -28,7 +28,22 @@ public class LibrReaderRepositoryImpl implements LibrReaderRepository {
     //todo
     @Override
     public Single<List<Reader>> getActiveReaders() {
-        return null;
+
+        return databaseService.getActiveReaders()
+                .map( readerEntities -> readerEntities.stream()
+                        .map(this::mapEntityToModel)
+                        .collect(Collectors.toList())
+                )
+                .onErrorReturn(throwable -> {
+                    List<Reader> noReadersFound = new ArrayList<>();
+                    noReadersFound.add(new Reader(
+                            0,
+                            "Ошибка подключения данных",
+                            throwable.getMessage(),
+                            "")
+                    );
+                    return noReadersFound;
+                });
     }
 
     //todo

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.malivasileva.librarian.presentation.lReadersFragment">
+    tools:context="com.malivasileva.librarian.presentation.lSpecialtyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,42 +12,51 @@
         >
 
         <SearchView
-            android:id="@+id/search_readers"
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="36sp"
-            android:layout_marginVertical="@dimen/padding_mid"
+            android:layout_height="@dimen/height_large"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:hint="@string/search_readers"
-            android:layout_marginBottom="@dimen/padding_small"/>
+            android:layout_marginBottom="@dimen/padding_mid"
+            android:paddingBottom="@dimen/padding_small"
+            android:iconifiedByDefault="false"
+            android:background="@color/primary_25"
+            android:queryHint="@string/search_specialty"
+            />
 
         <TextView
-            android:id="@+id/reader_placeholder"
+            android:id="@+id/text_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:paddingHorizontal="@dimen/padding_mid"
-            app:layout_constraintTop_toBottomOf="@id/search_readers"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/rv_placeholder"
             android:textSize="@dimen/text_large"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/readers_rv"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_readers"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/background"
             android:backgroundTint="@color/background"
             >
         </androidx.recyclerview.widget.RecyclerView>
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/padding_mid"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </FrameLayout>

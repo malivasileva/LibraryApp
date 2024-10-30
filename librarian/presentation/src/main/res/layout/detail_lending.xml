@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            >
+
+            <TextView
+                android:id="@+id/pageTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/text_large"/>
+
+            <TextView
+                android:id="@+id/text_reader_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/reader_num"
+                app:layout_constraintTop_toBottomOf="@id/pageTitle"
+                />
+            <EditText
+                android:id="@+id/reader_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_reader_num"
+                android:hint="@string/reader_num"
+                style="@style/TextViewStyle"/>
+
+            <net.colindodd.toggleimagebutton.ToggleImageButton
+                xmlns:tib="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/edit_reader_num"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintTop_toBottomOf="@id/text_reader_num"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/edit_or_save_field"
+                style="@style/ImageButtonStyle"
+                tib:tib_drawable_off="@drawable/baseline_edit_24"
+                tib:tib_drawable_on="@drawable/baseline_check_24"
+                />
+
+
+
+            <TextView
+                android:id="@+id/text_reader_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/reader_name"
+                app:layout_constraintTop_toBottomOf="@id/reader_num"
+                />
+            <EditText
+                android:id="@+id/reader_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_reader_name"
+                android:hint="@string/reader_name"
+                style="@style/TextViewStyle"/>
+
+            <TextView
+                android:id="@+id/text_book_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/book_num"
+                app:layout_constraintTop_toBottomOf="@id/reader_name"
+                />
+            <EditText
+                android:id="@+id/book_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_book_num"
+                android:hint="@string/book_num"
+                style="@style/TextViewStyle"/>
+            <net.colindodd.toggleimagebutton.ToggleImageButton
+                xmlns:tib="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/edit_book_num"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintTop_toBottomOf="@id/text_book_num"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/edit_or_save_field"
+                style="@style/ImageButtonStyle"
+                tib:tib_drawable_off="@drawable/baseline_edit_24"
+                tib:tib_drawable_on="@drawable/baseline_check_24"
+                />
+
+
+
+            <TextView
+                android:id="@+id/text_book_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/book_name"
+                app:layout_constraintTop_toBottomOf="@id/book_num"
+                />
+            <EditText
+                android:id="@+id/book_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_book_title"
+                android:hint="@string/book_name"
+                style="@style/TextViewStyle"/>
+
+            <TextView
+                android:id="@+id/text_book_authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/book_authors"
+                app:layout_constraintTop_toBottomOf="@id/book_title"
+                />
+            <EditText
+                android:id="@+id/book_authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_book_authors"
+                android:hint="@string/book_authors"
+                style="@style/TextViewStyle"/>
+
+            <TextView
+                android:id="@+id/text_lend_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/lend_date"
+                app:layout_constraintTop_toBottomOf="@id/book_authors"
+                />
+            <EditText
+                android:id="@+id/lend_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_lend_date"
+                android:hint="@string/lend_date"
+                style="@style/TextViewStyle"/>
+
+
+            <TextView
+                android:id="@+id/text_required_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/required_date"
+                app:layout_constraintTop_toBottomOf="@id/lend_date" />
+            <EditText
+                android:id="@+id/required_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_required_date"
+                android:hint="@string/required_date"
+                style="@style/TextViewStyle"/>
+            <Button
+                android:id="@+id/expand_button"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/text_required_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/extend" />
+
+            <TextView
+                android:id="@+id/text_returned_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/returned"
+                app:layout_constraintTop_toBottomOf="@id/required_date"/>
+            <EditText
+                android:id="@+id/returned_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_returned_date"
+                android:hint="@string/return_before"
+                style="@style/TextViewStyle"/>
+
+            <Button
+                android:id="@+id/return_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/returned_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/return_book"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</FrameLayout>

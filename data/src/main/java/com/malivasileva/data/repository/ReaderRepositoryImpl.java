@@ -1,5 +1,7 @@
 package com.malivasileva.data.repository;
 
+import android.util.Log;
+
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.entities.ReaderEntity;
@@ -13,6 +15,8 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class ReaderRepositoryImpl implements ReaderRepository {
+
+    private final String TAG = "ReaderRepositoryImpl";
 
     DatabaseService databaseService;
     UserStorage userStorage;
@@ -57,7 +61,7 @@ public class ReaderRepositoryImpl implements ReaderRepository {
         return databaseService.updateReader(mapModelToEntity(reader))
                 .onErrorReturn(
                         throwable -> {
-                            throwable.printStackTrace();
+                            Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
                             return false;
                         }
                 );

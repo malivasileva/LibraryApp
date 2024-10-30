@@ -5,7 +5,6 @@ import com.malivasileva.data.UserStorage;
 import com.malivasileva.data.entities.LendingEntity;
 import com.malivasileva.model.Lending;
 import com.malivasileva.reader.domain.repositories.ReaderLendingRepository;
-import com.malivasileva.librarian.domain.repositories.LibrLendingRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +24,7 @@ public class LendingsRepositoryImpl implements ReaderLendingRepository {
 
     @Override
     public Single<List<Lending>> getAllLendings() {
-        return databaseService.getLendingsFor(userStorage.getId())
+        return databaseService.getLendingsForReader(userStorage.getId())
                 .map( entities -> entities.stream()
                         .map(this::mapEntityToModel)
                         .collect(Collectors.toList())
@@ -52,6 +51,9 @@ public class LendingsRepositoryImpl implements ReaderLendingRepository {
     private Lending mapEntityToModel(LendingEntity entity) {
         return new Lending(
                 entity.getId(),
+                entity.getReaderId(),
+                entity.getReaderName(),
+                entity.getBookId(),
                 entity.getTitle(),
                 entity.getAuthors(),
                 entity.getStartDate(),

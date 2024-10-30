@@ -7,5 +7,5 @@
     <string name="lend_date">Выдано: </string>
     <string name="required_date">Вернуть до: </string>
     <string name="returned">Возвращено: </string>
-
+    <string name="edit_or_save_field">Изменить данные</string>
 </resources>

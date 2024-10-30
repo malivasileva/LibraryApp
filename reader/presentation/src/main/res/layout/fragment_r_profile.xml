@@ -37,6 +37,7 @@
             android:labelFor="@id/profile_et_phone"
             android:text="@string/mock_card"
             android:textSize="@dimen/text_mid"
+            android:hint="@string/mock_card"
             app:layout_constraintTop_toBottomOf="@id/profile_tv_card" />
 
 
@@ -56,6 +57,7 @@
             android:enabled="false"
             android:inputType="textPersonName"
             android:text="@string/mock_name"
+            android:hint="@string/name"
             android:textSize="@dimen/text_mid"
             app:layout_constraintTop_toBottomOf="@id/profile_tv_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_mid"
             android:enabled="false"
+            android:inputType="phone"
             android:text="@string/mock_phone"
             android:textSize="@dimen/text_mid"
             app:layout_constraintTop_toBottomOf="@id/profile_tv_phone"

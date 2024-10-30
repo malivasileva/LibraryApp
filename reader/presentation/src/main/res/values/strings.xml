@@ -15,5 +15,4 @@
     <string name="mock_phone">79998885566</string>
     <string name="mock_name">Name</string>
     <string name="mock_card">1</string>
-    <string name="edit_or_save_field">Изменить данные</string>
 </resources>

@@ -1,6 +1,10 @@
 package com.malivasileva.librarian.presentation;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,21 +12,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
-
 import com.malivasileva.librarian.presentation.adapters.BookAdapter;
 import com.malivasileva.presentation.R;
-import com.malivasileva.presentation.databinding.FragmentLBooksBinding;
+import com.malivasileva.presentation.databinding.SearchFragmentBinding;
 
 import java.util.ArrayList;
 
 
 public class lBooksFragment extends Fragment {
 
-    private FragmentLBooksBinding binding;
+    private SearchFragmentBinding binding;
     private LibrarianViewModel viewModel;
 
     private BookAdapter bookAdapter;
@@ -41,31 +40,30 @@ public class lBooksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentLBooksBinding.inflate(inflater, container, false);
+        binding = SearchFragmentBinding.inflate(inflater, container, false);
 
         bookAdapter = new BookAdapter(new ArrayList<>());
 
-        binding.booksRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.booksRv.setAdapter(bookAdapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerView.setAdapter(bookAdapter);
 
-        binding.searchBook.setOnSearchClickListener(new View.OnClickListener() {
+        binding.searchView.setQueryHint(getString(R.string.search_books));
+//        binding.recyclerView.setVisibility(View.INVISIBLE);
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                binding.searchBook.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        viewModel.searchBooks(query);
-                        binding.booksPlaceholder.setVisibility(View.INVISIBLE);
-                        binding.booksRv.setVisibility(View.VISIBLE);
-                        binding.searchBook.clearFocus();
-                        return true;
-                    }
+            public boolean onQueryTextSubmit(String query) {
+                viewModel.searchBooks(query);
+                binding.textPlaceholder.setVisibility(View.INVISIBLE);
+                binding.recyclerView.setVisibility(View.VISIBLE);
+                binding.searchView.clearFocus(); // Снимает фокус с SearchView после отправки
+                return true;
+            }
 
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        return false;
-                    }
-                });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Здесь можно добавить логику для обновления результатов по мере ввода текста
+                return false;
             }
         });
 
@@ -73,8 +71,8 @@ public class lBooksFragment extends Fragment {
             if (books != null) {
                 bookAdapter.updateBooks(books);
                 if (!books.isEmpty()) {
-                    binding.booksRv.setVisibility(View.VISIBLE);
-                    binding.booksPlaceholder.setVisibility(View.INVISIBLE);
+                    binding.recyclerView.setVisibility(View.VISIBLE);
+                    binding.textPlaceholder.setVisibility(View.INVISIBLE);
                 }
             }
         });
