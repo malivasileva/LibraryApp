@@ -46,6 +46,25 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 });
     }
 
+    @Override
+    public Single<Book> getBookWithId(int bookId) {
+        return databaseService.getBookWithId(bookId)
+                .map(this::mapEntityToModel)
+                .onErrorReturn(throwable -> {
+                    return new Book(
+                            0,
+                            "Ошибка получения данных",
+                            throwable.getMessage(),
+                            "",
+                            "",
+                            0,
+                            0f,
+                            0,
+                            0
+                    );
+                });
+    }
+
     private Book mapEntityToModel(BookEntity entity) {
         return new Book(
                 entity.getId(),

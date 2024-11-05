@@ -14,4 +14,5 @@ public interface LibrLendingRepository {
     Single<Boolean> updateLending(Lending lending);
     Single<Boolean> returnBook(int lendingId);
     Single<Boolean> expandReturnDate(int lendingId);
+    Single<Boolean> addLending(int cardNum, int bookNum);
 }

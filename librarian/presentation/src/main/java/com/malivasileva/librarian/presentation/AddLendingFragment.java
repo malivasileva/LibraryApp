@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,16 +20,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class DetailsLendingFragment extends Fragment {
+public class AddLendingFragment extends Fragment {
 
     private static final String ARG_LENDING_ID = "lending_id";
     private int lendingId;
     private DetailLendingBinding binding;
-    private LendingViewModel viewModel;
+    private AddLendingViewModel viewModel;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public static DetailsLendingFragment newInstance(int lendingId) {
-        DetailsLendingFragment fragment = new DetailsLendingFragment();
+    public static AddLendingFragment newInstance(int lendingId) {
+        AddLendingFragment fragment = new AddLendingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_LENDING_ID, lendingId);
         fragment.setArguments(args);
@@ -41,19 +41,43 @@ public class DetailsLendingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             lendingId = getArguments().getInt(ARG_LENDING_ID);
+        } else {
+            //todo ???
         }
-        viewModel = new ViewModelProvider(requireActivity()).get(LendingViewModel.class);
-        viewModel.getLending(lendingId);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(AddLendingViewModel.class);
+//        viewModel.getLending(lendingId);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DetailLendingBinding.inflate(inflater, container, false);
 
-        binding.pageTitle.setText("№ " + String.valueOf(lendingId));
+        binding.pageTitle.setText("Новая выдача");
 
-        viewModel.getLendingLiveData().observe(getViewLifecycleOwner(), lending -> {
+        viewModel.getReaderLiveData().observe(getViewLifecycleOwner(), reader -> {
+            if (reader != null) {
+                binding.readerName.setText(reader.getName());
+            }
+        });
+
+        viewModel.getBookLiveData().observe(getViewLifecycleOwner(), book -> {
+            if (book != null) {
+                binding.bookTitle.setText(book.getTitle());
+                binding.bookAuthors.setText(book.getAuthors());
+            }
+        });
+
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), msg -> {
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show();
+        });
+
+        viewModel.getEventLiveData().observe(getViewLifecycleOwner(), msg -> {
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show();
+        });
+
+        /*viewModel.getLendingLiveData().observe(getViewLifecycleOwner(), lending -> {
 
             if (viewModel.getLendingLiveData().getValue().getReturnDate() == null) {
                 binding.returnButton.setVisibility(View.VISIBLE);
@@ -82,18 +106,20 @@ public class DetailsLendingFragment extends Fragment {
                 binding.returnedDate.setText("не возвращено");
                 if (viewModel.isExpired()) binding.returnedDate.setTextColor(ContextCompat.getColor(requireActivity(), R.color.secondary));
             }
-        });
+        });*/
 
 
         binding.editReaderNum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked && Integer.parseInt(binding.readerNum.getText().toString()) != viewModel.getLendingLiveData().getValue().getReaderId()) {
-                    viewModel.updateLending(
-                            Integer.parseInt(binding.readerNum.getText().toString()),
-                            viewModel.getLendingLiveData().getValue().getBookId());
+                int readerNumEditText = Integer.parseInt(binding.readerNum.getText().toString());
+                if (isChecked) {
+                    binding.bookNum.findFocus();
+                } else if (readerNumEditText != viewModel.getReaderLiveData().getValue().getCard()) {
+                    viewModel.getReader(
+                            readerNumEditText
+                    );
                 }
-
                 binding.readerNum.setEnabled(isChecked);
             }
         });
@@ -101,10 +127,12 @@ public class DetailsLendingFragment extends Fragment {
         binding.editBookNum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked && Integer.parseInt(binding.bookNum.getText().toString()) != viewModel.getLendingLiveData().getValue().getBookId()) {
-                    viewModel.updateLending(
-                            viewModel.getLendingLiveData().getValue().getReaderId(),
-                            Integer.parseInt(binding.bookNum.getText().toString())
+                int bookNumEditText = Integer.parseInt(binding.bookNum.getText().toString());
+                if (isChecked) {
+                    binding.bookNum.findFocus();
+                } else if (bookNumEditText != viewModel.getBookLiveData().getValue().getId()) {
+                    viewModel.getBook(
+                            bookNumEditText
                             );
                 }
 
@@ -112,17 +140,13 @@ public class DetailsLendingFragment extends Fragment {
             }
         });
 
-        binding.expandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.expendReturnDate();
-            }
-        });
-
         binding.returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.returnBook();
+                viewModel.addLending(
+                        Integer.parseInt(binding.readerNum.getText().toString()),
+                        Integer.parseInt(binding.bookNum.getText().toString())
+                );
             }
         });
 

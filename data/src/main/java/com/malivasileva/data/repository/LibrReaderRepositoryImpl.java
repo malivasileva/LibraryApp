@@ -22,7 +22,15 @@ public class LibrReaderRepositoryImpl implements LibrReaderRepository {
     // hz
     @Override
     public Single<Reader> getReaderWithId(int card) {
-        return null;
+        return databaseService.getReader(Long.valueOf(card))
+                .map(this::mapEntityToModel)
+                .onErrorReturn(throwable -> {
+                    return new Reader(
+                            0,
+                            "Ошибка получения данных",
+                            throwable.getMessage(),
+                            "");
+                });
     }
 
     //todo
@@ -38,7 +46,7 @@ public class LibrReaderRepositoryImpl implements LibrReaderRepository {
                     List<Reader> noReadersFound = new ArrayList<>();
                     noReadersFound.add(new Reader(
                             0,
-                            "Ошибка подключения данных",
+                            "Ошибка получения данных",
                             throwable.getMessage(),
                             "")
                     );

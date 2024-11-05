@@ -6,6 +6,7 @@ import com.malivasileva.data.entities.BookEntity;
 import com.malivasileva.data.entities.LendingEntity;
 import com.malivasileva.data.entities.ReaderEntity;
 import com.malivasileva.data.entities.SpecialtyEntity;
+import com.malivasileva.model.Book;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -139,6 +140,36 @@ public class DatabaseService {
         });
     }
 
+    public Single<BookEntity> getBookWithId(int num) {
+        return Single.fromCallable(() -> {
+            BookEntity bookEntity = null;
+                    String query = "SELECT book_num, title, authors FROM public.books\n" +
+                            "WHERE book_num = ?";
+
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)
+                 ) {
+                statement.setInt(1, num);
+                ResultSet resultSet = statement.executeQuery();
+                resultSet.next();
+                bookEntity = new BookEntity(
+                        resultSet.getInt("book_num"),
+                        resultSet.getString("title"),
+                        resultSet.getString("authors"),
+                        null,
+                        null,
+                        0,
+                        0f,
+                        0,
+                        0
+                );
+            } catch (Exception e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+            }
+            return bookEntity;
+        });
+    }
+
     public Single<List<BookEntity>> getBooksFor(String request) {
         return Single.fromCallable(() -> {
             List<BookEntity> books = new ArrayList<>();
@@ -167,6 +198,36 @@ public class DatabaseService {
             return books;
         });
     }
+
+    public Single<Boolean> addLending(int cardNum, int bookNum) {
+        return Single.create(emitter -> {
+            // SQL-запрос для добавления новой выдачи книги
+            String query = "INSERT INTO public.book_lendings(book_num, card_num) VALUES (?, ?);";
+
+            try (Connection connection = DatabaseConnection.getLibrConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                // Устанавливаем параметры для запроса
+                statement.setInt(1, bookNum);
+                statement.setInt(2, cardNum);
+
+                // Выполняем запрос и проверяем количество затронутых строк
+                int rowsAffected = statement.executeUpdate();
+
+                // Если строка добавлена успешно, возвращаем true
+                if (rowsAffected > 0) {
+                    emitter.onSuccess(true);
+                } else {
+                    emitter.onSuccess(false);
+                }
+
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                emitter.onError(e);
+            }
+        });
+    }
+
 
     public Single<Boolean> updateLending(LendingEntity lending) {
         return Single.create( emitter -> {

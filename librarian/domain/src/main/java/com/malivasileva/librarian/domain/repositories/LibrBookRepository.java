@@ -7,5 +7,6 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public interface LibrBookRepository {
-    public Single<List<Book>> getBooksFor(String query);
+    Single<List<Book>> getBooksFor(String query);
+    Single<Book> getBookWithId(int bookId);
 }

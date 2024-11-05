@@ -36,7 +36,7 @@ public class LibrLendingsRepositoryImpl implements LibrLendingRepository {
                         .collect(Collectors.toList())
                 )
                 .onErrorReturn( throwable -> {
-                    throwable.printStackTrace();
+                    Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
                     return Collections.emptyList();
                 });
     }
@@ -46,7 +46,7 @@ public class LibrLendingsRepositoryImpl implements LibrLendingRepository {
         return databaseService.getLendingWitId(lendingId)
                 .map(this::mapEntityToModel)
                 .onErrorReturn(throwable -> {
-                    throwable.printStackTrace();
+                    Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
                     return new Lending(
                             -1,
                             0,
@@ -58,6 +58,17 @@ public class LibrLendingsRepositoryImpl implements LibrLendingRepository {
     @Override
     public Single<Boolean> updateLending(Lending lending) {
         return databaseService.updateLending(mapModelToEntity(lending))
+                .onErrorReturn(
+                        throwable -> {
+                            Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
+                            return false;
+                        }
+                );
+    }
+
+    @Override
+    public Single<Boolean> addLending(int cardNum, int bookNum) {
+        return databaseService.addLending(cardNum, bookNum)
                 .onErrorReturn(
                         throwable -> {
                             Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
