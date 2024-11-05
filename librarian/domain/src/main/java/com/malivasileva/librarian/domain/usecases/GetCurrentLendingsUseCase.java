@@ -7,14 +7,14 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class GetAllCurrentLendingsUseCase {
+public class GetCurrentLendingsUseCase {
     private final LibrLendingRepository lendingRepository;
 
-    public GetAllCurrentLendingsUseCase(LibrLendingRepository lendingRepository) {
+    public GetCurrentLendingsUseCase(LibrLendingRepository lendingRepository) {
         this.lendingRepository = lendingRepository;
     }
 
     public Single<List<Lending>> execute() {
-        return lendingRepository.getAllCurrentLendings();
+        return lendingRepository.getCurrentLendings();
     }
 }

@@ -8,4 +8,5 @@
     <string name="required_date">Вернуть до: </string>
     <string name="returned">Возвращено: </string>
     <string name="edit_or_save_field">Изменить данные</string>
+    <string name="reader">"Читатель: "</string>
 </resources>

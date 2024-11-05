@@ -458,9 +458,10 @@ public class DatabaseService {
     public Single<List<LendingEntity>> getAllCurrentLendings() {
         return Single.fromCallable(() -> {
             List<LendingEntity> lendings = new ArrayList<LendingEntity>();
-            String query = "SELECT L.lending_num, B.title, B.authors, L.lending_date, L.required_return_date, L.fact_return_date " +
-                    "FROM book_lendings L, books B " +
+            String query = "SELECT L.lending_num, R.name, B.title, B.authors, L.lending_date, L.required_return_date, L.fact_return_date " +
+                    "FROM book_lendings L, books B, readers R " +
                     "WHERE L.book_num = B.book_num AND L.fact_return_date IS NULL " +
+                    "AND L.card_num = R.card_num " +
 //                    "AND DATE(L.required_return_date) <= CURRENT_DATE " +
                     "ORDER BY required_return_date ASC";
 
@@ -474,7 +475,7 @@ public class DatabaseService {
                     LendingEntity lending = new LendingEntity(
                             resultSet.getInt("lending_num"),
                             0,
-                            "name",
+                            resultSet.getString("name"),
                             0,
                             resultSet.getString("title"),
                             resultSet.getString("authors"),

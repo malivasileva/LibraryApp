@@ -1,13 +1,11 @@
 package com.malivasileva.librarian.presentation;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.malivasileva.librarian.domain.usecases.ExitLibrarianUseCase;
-import com.malivasileva.librarian.domain.usecases.GetAllCurrentLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.GetCurrentLendingsUseCase;
 import com.malivasileva.librarian.domain.usecases.GetAllSpecialtiesUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchBooksUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchReaderUseCase;
@@ -35,7 +33,7 @@ public class LibrarianViewModel extends ViewModel {
     private final SearchReaderUseCase searchReaderUseCase;
     private final SearchSpecialtyUseCase searchSpecialtyUseCase;
     private final GetAllSpecialtiesUseCase getAllSpecialtiesUseCase;
-    private final GetAllCurrentLendingsUseCase getAllCurrentLendingsUseCase;
+    private final GetCurrentLendingsUseCase getCurrentLendingsUseCase;
     private final GetReadersWithActiveLendingsUseCase getReadersWithActiveLendingsUseCase;
 
     private MutableLiveData<String> eventLiveData = new MutableLiveData<>();
@@ -59,14 +57,14 @@ public class LibrarianViewModel extends ViewModel {
                               SearchReaderUseCase searchReaderUseCase,
                               SearchSpecialtyUseCase searchSpecialtyUseCase,
                               GetAllSpecialtiesUseCase getAllSpecialtiesUseCase,
-                              GetAllCurrentLendingsUseCase getAllCurrentLendingsUseCase,
+                              GetCurrentLendingsUseCase getCurrentLendingsUseCase,
                               GetReadersWithActiveLendingsUseCase getReadersWithActiveLendingsUseCase) {
         this.exitLibrarianUseCase = exitLibrarianUseCase;
         this.searchBooksUseCase = searchBooksUseCase;
         this.searchReaderUseCase = searchReaderUseCase;
         this.searchSpecialtyUseCase = searchSpecialtyUseCase;
         this.getAllSpecialtiesUseCase = getAllSpecialtiesUseCase;
-        this.getAllCurrentLendingsUseCase = getAllCurrentLendingsUseCase;
+        this.getCurrentLendingsUseCase = getCurrentLendingsUseCase;
         this.getReadersWithActiveLendingsUseCase = getReadersWithActiveLendingsUseCase;
 
         getAllSpecialties();
@@ -134,7 +132,7 @@ public class LibrarianViewModel extends ViewModel {
 
     public void getAllCurrentLendings() {
         disposables.add(
-                getAllCurrentLendingsUseCase.execute()
+                getCurrentLendingsUseCase.execute()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.malivasileva.librarian.presentation.adapters.LendingAdapter;
 import com.malivasileva.model.Lending;
 import com.malivasileva.presentation.R;
+import com.malivasileva.presentation.databinding.LMainBinding;
 import com.malivasileva.presentation.databinding.SearchFragmentBinding;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 public class lLendingsFragment extends Fragment {
     private SearchFragmentBinding binding;
+//    private LMainBinding rootBinding;
     private LibrarianViewModel viewModel;
     private LendingAdapter lendingAdapter;
 
@@ -39,6 +41,7 @@ public class lLendingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = SearchFragmentBinding.inflate(inflater, container, false);
+//        rootBinding = LMainBinding.inflate(inflater, container, false);
 
         lendingAdapter = new LendingAdapter(new ArrayList< Lending >(), lending -> {
             DetailsLendingFragment detailFragment = DetailsLendingFragment.newInstance(lending.getId());

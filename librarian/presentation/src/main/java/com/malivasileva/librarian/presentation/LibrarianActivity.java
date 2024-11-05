@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,6 +72,23 @@ public class LibrarianActivity extends AppCompatActivity {
                 return true;
             }
             return false;
+        });
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedItemId = binding.bottomNavView.getSelectedItemId();
+                if (selectedItemId == R.id.item_l_lendings) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.l_frame, new AddLendingFragment());
+                    fragmentTransaction.addToBackStack(null); // Добавляем в back stack без имени
+                    fragmentTransaction.commit();
+                } else if (selectedItemId == R.id.item_l_book) {
+//                    replaceFragment(new AddBookFragment());
+                    Toast.makeText(getApplicationContext(), "Книга не добавлена", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 

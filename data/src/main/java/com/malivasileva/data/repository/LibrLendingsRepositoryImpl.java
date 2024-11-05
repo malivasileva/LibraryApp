@@ -28,7 +28,7 @@ public class LibrLendingsRepositoryImpl implements LibrLendingRepository {
     }
 
     @Override
-    public Single<List<Lending>> getAllCurrentLendings() {
+    public Single<List<Lending>> getCurrentLendings() {
 
         return databaseService.getAllCurrentLendings()
                 .map( entities -> entities.stream()

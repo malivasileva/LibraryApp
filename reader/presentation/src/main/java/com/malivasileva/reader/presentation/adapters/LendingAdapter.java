@@ -3,6 +3,7 @@ package com.malivasileva.reader.presentation.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
         private TextView lendDate;
         private TextView requiredDate;
         private TextView returnDate;
+        private LinearLayout readerField;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -63,9 +65,13 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
             lendDate = itemView.findViewById(R.id.l_full_lend_date);
             requiredDate = itemView.findViewById(R.id.l_full_required_date);
             returnDate = itemView.findViewById(R.id.l_full_returned);
+            readerField = itemView.findViewById(R.id.reader_field);
         }
 
         public void bind(Lending lending) {
+
+            readerField.setVisibility(View.GONE);
+
             num.setText(String.valueOf(lending.getId()));
             title.setText(lending.getTitle());
             author.setText(lending.getAuthors());

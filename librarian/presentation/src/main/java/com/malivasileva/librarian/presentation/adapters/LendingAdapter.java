@@ -62,6 +62,7 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
         private TextView lendDate;
         private TextView requiredDate;
         private TextView returnDate;
+        private TextView readerName;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -73,11 +74,13 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
             lendDate = itemView.findViewById(R.id.l_full_lend_date);
             requiredDate = itemView.findViewById(R.id.l_full_required_date);
             returnDate = itemView.findViewById(R.id.l_full_returned);
+            readerName = itemView.findViewById(R.id.reader_name);
         }
 
         public void bind(final Lending lending, final OnItemClickListener listener) {
             itemView.setOnClickListener(v -> listener.onItemClick(lending));
 
+            readerName.setText(lending.getReaderName());
             num.setText(String.valueOf(lending.getId()));
             title.setText(lending.getTitle());
             author.setText(lending.getAuthors());

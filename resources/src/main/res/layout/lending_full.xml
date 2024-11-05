@@ -19,6 +19,25 @@
             android:layout_height="wrap_content"
             style="@style/TextViewStyle"
             />
+
+        <LinearLayout
+            android:id="@+id/reader_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reader"
+                style ="@style/TextViewStyle"/>
+            <TextView
+                android:id="@+id/reader_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_small"
+                style ="@style/TextViewStyle"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/l_full_title"
             android:layout_width="match_parent"

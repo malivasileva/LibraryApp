@@ -15,6 +15,7 @@ import com.malivasileva.presentation.databinding.DetailLendingBinding;
 import com.malivasileva.resources.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -28,12 +29,12 @@ public class AddLendingFragment extends Fragment {
     private AddLendingViewModel viewModel;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public static AddLendingFragment newInstance(int lendingId) {
-        AddLendingFragment fragment = new AddLendingFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_LENDING_ID, lendingId);
-        fragment.setArguments(args);
-        return fragment;
+    public static AddLendingFragment newInstance() {
+//        AddLendingFragment fragment = new AddLendingFragment();
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_LENDING_ID, lendingId);
+//        fragment.setArguments(args);
+        return new AddLendingFragment();
     }
 
     @Override
@@ -55,6 +56,26 @@ public class AddLendingFragment extends Fragment {
         binding = DetailLendingBinding.inflate(inflater, container, false);
 
         binding.pageTitle.setText("Новая выдача");
+        binding.returnedDate.setVisibility(View.GONE);
+        binding.textReturnedDate.setVisibility(View.GONE);
+
+        Date today = new Date();
+        binding.lendDate.setText(dateFormat.format(today));
+        binding.requiredDate.setText(dateFormat.format(new Date(today.getTime() + 10 * 24 * 60 * 60 + 1000)));
+
+        binding.returnButton.setVisibility(View.VISIBLE);
+        binding.returnButton.setText("Выдать");
+
+        binding.returnButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                viewModel.addLending(
+                        Integer.parseInt(binding.readerNum.getText().toString()),
+                        Integer.parseInt(binding.bookNum.getText().toString())
+                );
+            }
+        });
 
         viewModel.getReaderLiveData().observe(getViewLifecycleOwner(), reader -> {
             if (reader != null) {
@@ -75,47 +96,25 @@ public class AddLendingFragment extends Fragment {
 
         viewModel.getEventLiveData().observe(getViewLifecycleOwner(), msg -> {
             Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show();
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
-
-        /*viewModel.getLendingLiveData().observe(getViewLifecycleOwner(), lending -> {
-
-            if (viewModel.getLendingLiveData().getValue().getReturnDate() == null) {
-                binding.returnButton.setVisibility(View.VISIBLE);
-            } else {
-                binding.returnButton.setVisibility(View.INVISIBLE);
-            }
-
-            if (viewModel.canExtendLending()) {
-                binding.expandButton.setVisibility(View.VISIBLE);
-            } else {
-                binding.expandButton.setVisibility(View.INVISIBLE);
-            }
-
-            binding.readerNum.setText(String.valueOf(lending.getReaderId()));
-            binding.readerName.setText(lending.getReaderName());
-            binding.bookNum.setText(String.valueOf(lending.getBookId()));
-            binding.bookTitle.setText(lending.getTitle());
-            binding.bookAuthors.setText(lending.getAuthors());
-            binding.lendDate.setText(dateFormat.format(lending.getLendDate()));
-
-            binding.requiredDate.setText(dateFormat.format(lending.getRequiredDate()));
-            if (lending.getReturnDate() != null) {
-                binding.returnedDate.setText(dateFormat.format(lending.getReturnDate()));
-                binding.returnedDate.setTextColor(ContextCompat.getColor(requireActivity(), R.color.on_background));
-            } else {
-                binding.returnedDate.setText("не возвращено");
-                if (viewModel.isExpired()) binding.returnedDate.setTextColor(ContextCompat.getColor(requireActivity(), R.color.secondary));
-            }
-        });*/
-
 
         binding.editReaderNum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int readerNumEditText = Integer.parseInt(binding.readerNum.getText().toString());
+                int readerNumEditText;
+                String readerNumText = binding.readerNum.getText().toString().trim();
+
+                if (readerNumText.isEmpty()) {
+                    // Задайте значение по умолчанию или обработайте ошибку
+                    readerNumEditText = 0; // Например, значение по умолчанию
+                } else {
+                    readerNumEditText = Integer.parseInt(readerNumText);
+                }
+
                 if (isChecked) {
-                    binding.bookNum.findFocus();
-                } else if (readerNumEditText != viewModel.getReaderLiveData().getValue().getCard()) {
+                    binding.readerNum.findFocus();
+                } else if (viewModel.getReaderLiveData().getValue() == null || readerNumEditText != viewModel.getReaderLiveData().getValue().getCard()) {
                     viewModel.getReader(
                             readerNumEditText
                     );
@@ -127,10 +126,19 @@ public class AddLendingFragment extends Fragment {
         binding.editBookNum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int bookNumEditText = Integer.parseInt(binding.bookNum.getText().toString());
+                int bookNumEditText;
+                String bookNumText = binding.bookNum.getText().toString().trim();
+
+                if (bookNumText.isEmpty()) {
+                    // Установите значение по умолчанию или обработайте ошибку
+                    bookNumEditText = 0; // Например, значение по умолчанию
+                } else {
+                    bookNumEditText = Integer.parseInt(bookNumText);
+                }
+
                 if (isChecked) {
                     binding.bookNum.findFocus();
-                } else if (bookNumEditText != viewModel.getBookLiveData().getValue().getId()) {
+                } else if (viewModel.getBookLiveData().getValue() == null || bookNumEditText != viewModel.getBookLiveData().getValue().getId()) {
                     viewModel.getBook(
                             bookNumEditText
                             );
