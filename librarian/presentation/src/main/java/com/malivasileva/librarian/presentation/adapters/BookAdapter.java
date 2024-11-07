@@ -7,18 +7,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.malivasileva.resources.R;
 
 import com.malivasileva.model.Book;
+import com.malivasileva.resources.R;
 
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder>{
 
-    private List<Book> bookList;
+    public interface OnItemClickListener {
+        void onItemClick(Book book);
+    }
 
-    public BookAdapter(List<Book> bookList) {
+    private List<Book> bookList;
+    private BookAdapter.OnItemClickListener listener;
+
+    public BookAdapter(List<Book> bookList, BookAdapter.OnItemClickListener listener) {
         this.bookList = bookList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,8 +36,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-        Book book = bookList.get(position);
-        holder.bind(book);
+        holder.bind(bookList.get(position), listener);
     }
 
     @Override
@@ -64,7 +69,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             amount = itemView.findViewById(R.id.book_amount);
         }
 
-        public void bind (Book book) {
+        public void bind (Book book, final BookAdapter.OnItemClickListener listener) {
+
+            itemView.setOnClickListener(v -> listener.onItemClick(book));
+
             bookNum.setText(String.valueOf(book.getId()));
             title.setText(book.getTitle());
             author.setText(book.getAuthors());

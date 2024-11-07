@@ -19,4 +19,12 @@
     <string name="book_authors">Авторы</string>
     <string name="extend">Продлить</string>
     <string name="return_book">Закрыть выдачу</string>
+    <string name="address">Адрес издательства:</string>
+    <string name="publisher">Издательство</string>
+    <string name="copy">Количество книг в библиотеке</string>
+    <string name="year">Год издания</string>
+    <string name="book_num_placeholder">Номер книги</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="get_report">Список выдач книги</string>
+    <string name="price">Цена</string>
 </resources>

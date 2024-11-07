@@ -1,6 +1,6 @@
 package com.malivasileva.data.repository;
 
-import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.malivasileva.data.DatabaseService;
 import com.malivasileva.data.entities.BookEntity;
@@ -15,6 +15,7 @@ import io.reactivex.rxjava3.core.Single;
 
 public class LibrBookRepositoryImpl implements LibrBookRepository {
 
+    private final String TAG = "LibrBookRepositoryImpl";
     private final DatabaseService databaseService;
 
     public LibrBookRepositoryImpl (DatabaseService databaseService) {
@@ -65,6 +66,17 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 });
     }
 
+    @Override
+    public Single<Boolean> updateBook(Book book) {
+        return databaseService.updateBook(mapModelToEntity(book))
+                .onErrorReturn(
+                        throwable -> {
+                            Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
+                            return false;
+                        }
+                );
+    }
+
     private Book mapEntityToModel(BookEntity entity) {
         return new Book(
                 entity.getId(),
@@ -76,6 +88,20 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 entity.getPrice(),
                 entity.getCopies(),
                 entity.getYear()
+        );
+    }
+
+    private BookEntity mapModelToEntity(Book book) {
+        return new BookEntity(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthors(),
+                book.getPublisheAddress(),
+                book.getPublisherName(),
+                book.getPages(),
+                book.getPrice(),
+                book.getCopies(),
+                book.getYear()
         );
     }
 }

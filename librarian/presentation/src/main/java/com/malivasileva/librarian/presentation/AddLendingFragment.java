@@ -60,7 +60,7 @@ public class AddLendingFragment extends Fragment {
 
         Date today = new Date();
         binding.lendDate.setText(dateFormat.format(today));
-        binding.requiredDate.setText(dateFormat.format(new Date(today.getTime() + 10 * 24 * 60 * 60 + 1000)));
+        binding.requiredDate.setText(dateFormat.format(new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000)));
 
         binding.returnButton.setVisibility(View.VISIBLE);
         binding.returnButton.setText("Выдать");
@@ -113,7 +113,10 @@ public class AddLendingFragment extends Fragment {
 
                 if (isChecked) {
                     binding.readerNum.findFocus();
-                } else if (viewModel.getReaderLiveData().getValue() == null || readerNumEditText != viewModel.getReaderLiveData().getValue().getCard()) {
+                } else if (
+                        viewModel.getReaderLiveData().getValue() == null ||
+                                readerNumEditText != viewModel.getReaderLiveData().getValue().getCard() ||
+                                readerNumEditText != 0) {
                     viewModel.getReader(
                             readerNumEditText
                     );
@@ -137,7 +140,11 @@ public class AddLendingFragment extends Fragment {
 
                 if (isChecked) {
                     binding.bookNum.findFocus();
-                } else if (viewModel.getBookLiveData().getValue() == null || bookNumEditText != viewModel.getBookLiveData().getValue().getId()) {
+                } else if (
+                        viewModel.getBookLiveData().getValue() == null ||
+                                bookNumEditText != viewModel.getBookLiveData().getValue().getId() ||
+                                bookNumEditText != 0
+                ) {
                     viewModel.getBook(
                             bookNumEditText
                             );

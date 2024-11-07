@@ -43,7 +43,13 @@ public class lBooksFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = SearchFragmentBinding.inflate(inflater, container, false);
 
-        bookAdapter = new BookAdapter(new ArrayList<>());
+        bookAdapter = new BookAdapter(new ArrayList<>(), book -> {
+            DetailsBookFragment detailFragment = DetailsBookFragment.newInstance(book.getId());
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.l_frame, detailFragment)  // R.id.frame_layout — ID вашего FrameLayout
+                    .addToBackStack(null)  // Добавляет транзакцию в back stack
+                    .commit();
+        });
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(bookAdapter);

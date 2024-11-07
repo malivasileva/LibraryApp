@@ -18,6 +18,7 @@ import com.malivasileva.librarian.domain.usecases.ReturnBookUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchBooksUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchReaderUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchSpecialtyUseCase;
+import com.malivasileva.librarian.domain.usecases.UpdateBookUseCase;
 import com.malivasileva.librarian.domain.usecases.UpdateLendingUseCase;
 
 import dagger.Module;
@@ -97,5 +98,10 @@ public class DomainModule {
     @Provides
     public AddLendingUseCase provideAddLendingUseCase (LibrLendingRepository lendingRepository) {
         return new AddLendingUseCase(lendingRepository);
+    }
+
+    @Provides
+    public UpdateBookUseCase provideUpdateBookUseCase (LibrBookRepository librBookRepository) {
+        return new UpdateBookUseCase(librBookRepository);
     }
 }

@@ -6,7 +6,6 @@ import com.malivasileva.data.entities.BookEntity;
 import com.malivasileva.data.entities.LendingEntity;
 import com.malivasileva.data.entities.ReaderEntity;
 import com.malivasileva.data.entities.SpecialtyEntity;
-import com.malivasileva.model.Book;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -140,10 +139,52 @@ public class DatabaseService {
         });
     }
 
+    public Single<Boolean> updateBook(BookEntity book) {
+        return Single.create( emitter -> {
+            String query = "UPDATE public.books " +
+                    "SET title=?, " +
+                    "authors=?, " +
+                    "publisher_address=?, " +
+                    "publisher_name=?, " +
+                    "page_total=?, " +
+                    "price_num=?, " +
+                    "copy_total=?, " +
+                    "publishing_year=? " +
+                    "WHERE book_num = ?;";
+
+            try (Connection connection = DatabaseConnection.getLibrConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setString(1, book.getTitle());
+                statement.setString(2, book.getAuthors());
+                statement.setString(3, book.getAddress());
+                statement.setString(4, book.getPublisher());
+                statement.setInt(5, book.getPages());
+                statement.setDouble(6, book.getPrice());
+                statement.setInt(7, book.getCopies());
+                statement.setInt(8, book.getYear());
+                statement.setInt(9, book.getId());
+
+                int rowsAffected = statement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    emitter.onSuccess(true);
+                } else {
+                    emitter.onSuccess(false);
+                }
+
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                emitter.onError(e);
+            }
+
+        });
+    }
+
     public Single<BookEntity> getBookWithId(int num) {
         return Single.fromCallable(() -> {
             BookEntity bookEntity = null;
-                    String query = "SELECT book_num, title, authors FROM public.books\n" +
+                    String query = "SELECT * FROM public.books\n" +
                             "WHERE book_num = ?";
 
             try (Connection connection = DatabaseConnection.getConnection();
@@ -156,12 +197,12 @@ public class DatabaseService {
                         resultSet.getInt("book_num"),
                         resultSet.getString("title"),
                         resultSet.getString("authors"),
-                        null,
-                        null,
-                        0,
-                        0f,
-                        0,
-                        0
+                        resultSet.getString("publisher_address"),
+                        resultSet.getString("publisher_name"),
+                        resultSet.getInt("page_total"),
+                        resultSet.getFloat("price_num"),
+                        resultSet.getInt("copy_total"),
+                        resultSet.getInt("publishing_year")
                 );
             } catch (Exception e) {
                 Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);

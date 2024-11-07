@@ -22,8 +22,8 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
         void onItemClick(Lending lending);
     }
 
-    private List<Lending> lendingList;
-    private OnItemClickListener listener;
+    private final List<Lending> lendingList;
+    private final OnItemClickListener listener;
 
     public LendingAdapter(List<Lending> lendingList, OnItemClickListener listener) {
         this.lendingList = lendingList;
