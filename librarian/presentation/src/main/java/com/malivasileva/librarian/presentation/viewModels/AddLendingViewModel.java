@@ -1,4 +1,4 @@
-package com.malivasileva.librarian.presentation;
+package com.malivasileva.librarian.presentation.viewModels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

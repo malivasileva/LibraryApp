@@ -7,12 +7,11 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.malivasileva.librarian.presentation.viewModels.AddLendingViewModel;
 import com.malivasileva.presentation.databinding.DetailLendingBinding;
-import com.malivasileva.resources.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

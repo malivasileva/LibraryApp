@@ -1,4 +1,4 @@
-package com.malivasileva.librarian.presentation;
+package com.malivasileva.librarian.presentation.viewModels;
 
 import android.util.Log;
 

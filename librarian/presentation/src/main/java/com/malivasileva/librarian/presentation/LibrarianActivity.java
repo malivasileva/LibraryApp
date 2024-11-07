@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.malivasileva.librarian.presentation.viewModels.LibrarianViewModel;
 import com.malivasileva.presentation.R;
 import com.malivasileva.presentation.databinding.LMainBinding;
 

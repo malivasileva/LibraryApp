@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.malivasileva.librarian.presentation.viewModels.LendingViewModel;
 import com.malivasileva.presentation.databinding.DetailLendingBinding;
 import com.malivasileva.resources.R;
 

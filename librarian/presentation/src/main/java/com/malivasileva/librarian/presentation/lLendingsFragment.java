@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.malivasileva.librarian.presentation.adapters.LendingAdapter;
+import com.malivasileva.librarian.presentation.viewModels.LibrarianViewModel;
 import com.malivasileva.model.Lending;
 import com.malivasileva.presentation.R;
-import com.malivasileva.presentation.databinding.LMainBinding;
 import com.malivasileva.presentation.databinding.SearchFragmentBinding;
 
 import java.util.ArrayList;
