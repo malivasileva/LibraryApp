@@ -77,6 +77,18 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 );
     }
 
+    @Override
+    public Single<Boolean> deleteBook(int id) {
+        return databaseService.deleteBook(id)
+                .onErrorReturn(
+                        throwable -> {
+                            Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
+                            return false;
+                        }
+                );
+    }
+
+
     private Book mapEntityToModel(BookEntity entity) {
         return new Book(
                 entity.getId(),

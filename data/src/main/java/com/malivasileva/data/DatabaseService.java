@@ -1,5 +1,6 @@
 package com.malivasileva.data;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.malivasileva.data.entities.BookEntity;
@@ -136,6 +137,30 @@ public class DatabaseService {
                 throw new RuntimeException(e);
             }
             return readers;
+        });
+    }
+
+    public Single<Boolean> deleteBook(int id) {
+        return Single.create( emitter -> {
+            String quety = "DELETE FROM public.books WHERE book_num = ?";
+
+            try (Connection connection = DatabaseConnection.getLibrConnection();
+            PreparedStatement statement = connection.prepareStatement(quety)) {
+
+                statement.setInt(1, id);
+
+                int rowAffected = statement.executeUpdate();
+
+                if (rowAffected > 0) {
+                    emitter.onSuccess(true);
+                } else {
+                    emitter.onSuccess(false);
+                }
+
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                emitter.onError(e);
+            }
         });
     }
 

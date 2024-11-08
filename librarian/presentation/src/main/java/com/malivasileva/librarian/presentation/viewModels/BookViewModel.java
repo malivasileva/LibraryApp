@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.malivasileva.librarian.domain.usecases.DeleteBookUseCase;
 import com.malivasileva.librarian.domain.usecases.GetBookWithIdUseCase;
 import com.malivasileva.librarian.domain.usecases.UpdateBookUseCase;
 import com.malivasileva.model.Book;
@@ -20,6 +21,7 @@ public class BookViewModel extends ViewModel {
 
     private final GetBookWithIdUseCase getBookWithIdUseCase;
     private final UpdateBookUseCase updateBookUseCase;
+    private final DeleteBookUseCase deleteBookUseCase;
 
     private MutableLiveData<Book> bookLiveData = new MutableLiveData<>();
     private MutableLiveData<String> eventLiveData = new MutableLiveData<>();
@@ -29,10 +31,12 @@ public class BookViewModel extends ViewModel {
     @Inject
     public BookViewModel(
             GetBookWithIdUseCase getBookWithIdUseCase,
-            UpdateBookUseCase updateBookUseCase
+            UpdateBookUseCase updateBookUseCase,
+            DeleteBookUseCase deleteBookUseCase
     ) {
         this.getBookWithIdUseCase = getBookWithIdUseCase;
         this.updateBookUseCase = updateBookUseCase;
+        this.deleteBookUseCase = deleteBookUseCase;
     }
 
     public LiveData<Book> getBookLiveData() { return bookLiveData; }
@@ -88,6 +92,23 @@ public class BookViewModel extends ViewModel {
                             }
                             eventLiveData.setValue(msg);
                         })
+        );
+    }
+
+    public void deleteBook(int id) {
+        disposable.add(
+                deleteBookUseCase.execute(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe( result -> {
+                            String msg;
+                            if (result) {
+                                msg = "Изменения сохранены";
+                            } else {
+                                msg = "Произошла ошибка";
+                            }
+                            eventLiveData.setValue(msg);
+                        } )
         );
     }
 }

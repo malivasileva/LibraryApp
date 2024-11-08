@@ -10,4 +10,6 @@ public interface LibrBookRepository {
     Single<List<Book>> getBooksFor(String query);
     Single<Book> getBookWithId(int bookId);
     Single<Boolean> updateBook(Book book);
+    Single<Boolean> deleteBook(int id);
+
 }

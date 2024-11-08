@@ -291,6 +291,14 @@
                     tib:tib_drawable_off="@drawable/baseline_edit_24"
                     tib:tib_drawable_on="@drawable/baseline_check_24" />
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/secondary_variant"
+                android:text="@string/delete_book"
+                />
         </LinearLayout>
     </ScrollView>
 

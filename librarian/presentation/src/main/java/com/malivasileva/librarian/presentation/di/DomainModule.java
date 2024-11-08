@@ -6,6 +6,7 @@ import com.malivasileva.librarian.domain.repositories.LibrReaderRepository;
 import com.malivasileva.librarian.domain.repositories.LibrarianRepository;
 import com.malivasileva.librarian.domain.repositories.SpecialtyRepository;
 import com.malivasileva.librarian.domain.usecases.AddLendingUseCase;
+import com.malivasileva.librarian.domain.usecases.DeleteBookUseCase;
 import com.malivasileva.librarian.domain.usecases.ExitLibrarianUseCase;
 import com.malivasileva.librarian.domain.usecases.ExpandReturnDateUseCase;
 import com.malivasileva.librarian.domain.usecases.GetCurrentLendingsUseCase;
@@ -101,7 +102,12 @@ public class DomainModule {
     }
 
     @Provides
-    public UpdateBookUseCase provideUpdateBookUseCase (LibrBookRepository librBookRepository) {
-        return new UpdateBookUseCase(librBookRepository);
+    public UpdateBookUseCase provideUpdateBookUseCase (LibrBookRepository bookRepository) {
+        return new UpdateBookUseCase(bookRepository);
+    }
+
+    @Provides
+    public DeleteBookUseCase provideDeleteBookUseCase (LibrBookRepository bookRepository) {
+        return new DeleteBookUseCase(bookRepository);
     }
 }

@@ -149,6 +149,30 @@ public class DetailsBookFragment extends Fragment {
             }
         });
 
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Удалить книгу?")
+                        .setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.deleteBook(bookId);
+                                dialog.dismiss();
+                                requireActivity().getSupportFragmentManager().popBackStack();
+                            }
+                        })
+                        .setNegativeButton( "Отмена", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setCancelable(true)
+                        .show();
+            }
+        });
+
         return binding.getRoot();
     }
 
