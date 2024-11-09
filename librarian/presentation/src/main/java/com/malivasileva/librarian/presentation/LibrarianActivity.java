@@ -86,8 +86,13 @@ public class LibrarianActivity extends AppCompatActivity {
                     fragmentTransaction.addToBackStack(null); // Добавляем в back stack без имени
                     fragmentTransaction.commit();
                 } else if (selectedItemId == R.id.item_l_book) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.l_frame, new AddBookFragment());
+                    fragmentTransaction.addToBackStack(null); // Добавляем в back stack без имени
+                    fragmentTransaction.commit();
 //                    replaceFragment(new AddBookFragment());
-                    Toast.makeText(getApplicationContext(), "Книга не добавлена", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Книга не добавлена", Toast.LENGTH_SHORT).show();
                 }
             }
         });

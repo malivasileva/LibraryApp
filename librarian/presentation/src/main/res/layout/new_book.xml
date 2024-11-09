@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"> <!-- Отступ для области с кнопками -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_small">
+
+            <TextView
+                android:id="@+id/pageTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_num_placeholder"
+                android:textSize="@dimen/text_large" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_name" />
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="text"
+                android:hint="@string/book_name"
+                style="@style/TextViewStyle" />
+
+            <!-- Authors -->
+            <TextView
+                android:id="@+id/text_authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_authors" />
+
+            <EditText
+                android:id="@+id/authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="text"
+                android:hint="@string/book_authors"
+                style="@style/TextViewStyle" />
+
+            <!-- Address -->
+            <TextView
+                android:id="@+id/text_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/address" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="text"
+                android:hint="@string/address"
+                style="@style/TextViewStyle" />
+
+            <!-- Publisher -->
+            <TextView
+                android:id="@+id/text_publisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/publisher" />
+
+            <EditText
+                android:id="@+id/publisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="text"
+                android:hint="@string/publisher"
+                style="@style/TextViewStyle" />
+
+            <!-- Page -->
+            <TextView
+                android:id="@+id/text_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pages_in_book" />
+
+            <EditText
+                android:id="@+id/page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="number"
+                android:hint="@string/pages_in_book"
+                style="@style/TextViewStyle" />
+
+            <!-- Price -->
+            <TextView
+                android:id="@+id/text_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/price" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="numberDecimal"
+                android:hint="@string/price"
+                style="@style/TextViewStyle" />
+
+            <!-- Copy -->
+            <TextView
+                android:id="@+id/text_copy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/copy" />
+
+            <EditText
+                android:id="@+id/copy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="number"
+                android:hint="@string/copy"
+                style="@style/TextViewStyle" />
+
+            <!-- Year -->
+            <TextView
+                android:id="@+id/text_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/year" />
+
+            <EditText
+                android:id="@+id/year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="number"
+                android:hint="@string/year"
+                style="@style/TextViewStyle" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:backgroundTint="@color/secondary_variant"
+                android:text="@string/save_book" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom buttons -->
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/padding_small"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/clear_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:backgroundTint="@color/secondary"
+            android:text="@string/clear_fields" />
+    </LinearLayout>
+</FrameLayout>

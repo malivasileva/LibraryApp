@@ -23,6 +23,18 @@ public class Book {
         this.year = year;
     }
 
+    public Book (String title, String authors, String publisheAddress, String publisherName, int pages, float price, int copies, int year) {
+        id = -1;
+        this.title = title;
+        this.authors = authors;
+        this.publisheAddress = publisheAddress;
+        this.publisherName = publisherName;
+        this.pages = pages;
+        this.price = price;
+        this.copies = copies;
+        this.year = year;
+    }
+
     public int getId() {
         return id;
     }

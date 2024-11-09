@@ -28,4 +28,6 @@
     <string name="get_report">Список выдач книги</string>
     <string name="price">Цена</string>
     <string name="delete_book">Удалить книгу</string>
+    <string name="save_book">Добавить книгу</string>
+    <string name="clear_fields">Отчистить поля</string>
 </resources>

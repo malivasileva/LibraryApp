@@ -11,5 +11,6 @@ public interface LibrBookRepository {
     Single<Book> getBookWithId(int bookId);
     Single<Boolean> updateBook(Book book);
     Single<Boolean> deleteBook(int id);
+    Single<Boolean> addBook(Book book);
 
 }

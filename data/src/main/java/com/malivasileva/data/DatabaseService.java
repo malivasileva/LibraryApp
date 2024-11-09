@@ -164,6 +164,51 @@ public class DatabaseService {
         });
     }
 
+    public Single<Boolean> addBook(BookEntity book) {
+        return Single.create(emitter -> {
+            String query = "INSERT INTO public.books(" +
+                    "title, " +
+                    "authors, " +
+                    "publisher_address, " +
+                    "publisher_name, " +
+                    "page_total, " +
+                    "price_num, " +
+                    "copy_total, " +
+                    "publishing_year) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+            try (Connection connection = DatabaseConnection.getLibrConnection()) {
+                assert connection != null;
+                try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+                    // Устанавливаем параметры для запроса
+                    statement.setString(1, book.getTitle());
+                    statement.setString(2, book.getAuthors());
+                    statement.setString(3, book.getAddress());
+                    statement.setString(4, book.getPublisher());
+                    statement.setInt(5, book.getPages());
+                    statement.setFloat(6, book.getPrice());
+                    statement.setInt(7, book.getCopies());
+                    statement.setInt(8, book.getYear());
+
+                    // Выполняем запрос и проверяем количество затронутых строк
+                    int rowsAffected = statement.executeUpdate();
+
+                    // Если строка добавлена успешно, возвращаем true
+                    if (rowsAffected > 0) {
+                        emitter.onSuccess(true);
+                    } else {
+                        emitter.onSuccess(false);
+                    }
+
+                }
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                emitter.onError(e);
+            }
+        });
+    }
+
     public Single<Boolean> updateBook(BookEntity book) {
         return Single.create( emitter -> {
             String query = "UPDATE public.books " +
@@ -177,27 +222,29 @@ public class DatabaseService {
                     "publishing_year=? " +
                     "WHERE book_num = ?;";
 
-            try (Connection connection = DatabaseConnection.getLibrConnection();
-                 PreparedStatement statement = connection.prepareStatement(query)) {
+            try (Connection connection = DatabaseConnection.getLibrConnection()) {
+                assert connection != null;
+                try (PreparedStatement statement = connection.prepareStatement(query)) {
 
-                statement.setString(1, book.getTitle());
-                statement.setString(2, book.getAuthors());
-                statement.setString(3, book.getAddress());
-                statement.setString(4, book.getPublisher());
-                statement.setInt(5, book.getPages());
-                statement.setDouble(6, book.getPrice());
-                statement.setInt(7, book.getCopies());
-                statement.setInt(8, book.getYear());
-                statement.setInt(9, book.getId());
+                    statement.setString(1, book.getTitle());
+                    statement.setString(2, book.getAuthors());
+                    statement.setString(3, book.getAddress());
+                    statement.setString(4, book.getPublisher());
+                    statement.setInt(5, book.getPages());
+                    statement.setDouble(6, book.getPrice());
+                    statement.setInt(7, book.getCopies());
+                    statement.setInt(8, book.getYear());
+                    statement.setInt(9, book.getId());
 
-                int rowsAffected = statement.executeUpdate();
+                    int rowsAffected = statement.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    emitter.onSuccess(true);
-                } else {
-                    emitter.onSuccess(false);
+                    if (rowsAffected > 0) {
+                        emitter.onSuccess(true);
+                    } else {
+                        emitter.onSuccess(false);
+                    }
+
                 }
-
             } catch (SQLException e) {
                 Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
                 emitter.onError(e);

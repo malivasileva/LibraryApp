@@ -88,6 +88,16 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 );
     }
 
+    @Override
+    public Single<Boolean> addBook(Book book) {
+        return databaseService.addBook(mapModelToEntity(book));
+                /*.onErrorReturn(
+                        throwable -> {
+                            Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
+                            return false;
+                        }
+                );*/
+    }
 
     private Book mapEntityToModel(BookEntity entity) {
         return new Book(
