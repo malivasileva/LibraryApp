@@ -1,9 +1,11 @@
 package com.malivasileva.librarian.presentation.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,19 +16,24 @@ import com.malivasileva.model.Lending;
 import com.malivasileva.resources.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
-public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingViewHolder> {
+public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingViewHolder> implements Filterable {
 
     public interface OnItemClickListener {
         void onItemClick(Lending lending);
     }
 
-    private final List<Lending> lendingList;
+    private final List<Lending> originalList;
+    private final List<Lending> filteredList;
+
     private final OnItemClickListener listener;
 
-    public LendingAdapter(List<Lending> lendingList, OnItemClickListener listener) {
-        this.lendingList = lendingList;
+    public LendingAdapter(List<Lending> lendingList,
+                          OnItemClickListener listener) {
+        this.originalList = lendingList;
+        this.filteredList = new ArrayList<>(lendingList);
         this.listener = listener;
     }
 
@@ -40,19 +47,64 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
 
     @Override
     public void onBindViewHolder(@NonNull LendingViewHolder holder, int position) {
-        holder.bind(lendingList.get(position), listener);
+        holder.bind(filteredList.get(position), listener);  // Используем filteredList
     }
 
     @Override
     public int getItemCount() {
-        return lendingList.size();
+        return filteredList.size();
     }
 
-    public void updateList(List<Lending> newList) {
-        lendingList.clear();
-        lendingList.addAll(newList);
+    public void updateList(List<Lending> newLendings) {
+        originalList.clear();
+        originalList.addAll(newLendings);
+        getFilter().filter("");
+
         notifyDataSetChanged();
     }
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Lending> filteredResults = new ArrayList<>();
+                if (constraint == null || constraint.length() == 0) {
+                    // Если строка поиска пустая, возвращаем оригинальный список
+                    filteredResults.addAll(originalList);
+                } else {
+                    Log.d("adapter-1", constraint.toString());
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+                    Log.d("adapter-2", filterPattern);
+                    for (Lending lending : originalList) {
+                        if (lending.getReaderName().toLowerCase().contains(filterPattern) ||
+                                lending.getTitle().toLowerCase().contains(filterPattern) ||
+                                lending.getAuthors().toLowerCase().contains(filterPattern)) {
+                            filteredResults.add(lending);
+                            Log.d("adapter-3-name", lending.getReaderName().toLowerCase());
+                            Log.d("adapter-3-title", lending.getTitle().toLowerCase());
+                            Log.d("adapter-3-authors", lending.getAuthors().toLowerCase());
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredResults;
+                return results;
+            }
+
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                List<Lending> result = (List<Lending>) results.values;
+                filteredList.clear();
+                filteredList.addAll(result);
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public static class LendingViewHolder extends RecyclerView.ViewHolder {
 

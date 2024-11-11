@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -81,6 +82,19 @@ public class ReadersLendingsFragment extends Fragment {
 
         viewModel.getEventLiveData().observe(getViewLifecycleOwner(), msg -> {
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
+        });
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                lendingAdapter.getFilter().filter(newText);
+                return false;
+            }
         });
 
         return binding.getRoot();
