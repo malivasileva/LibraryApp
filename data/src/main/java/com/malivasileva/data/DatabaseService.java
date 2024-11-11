@@ -513,7 +513,7 @@ public class DatabaseService {
                     "L.required_return_date, " +
                     "L.fact_return_date " +
                     "FROM book_lendings L, books B, readers R  " +
-                    "WHERE book_num = ? and L.book_num = B.book_num and L.card_num = R.card_num " +
+                    "WHERE L.book_num = ? and L.book_num = B.book_num and L.card_num = R.card_num " +
                     "ORDER BY lending_date DESC";
 
             try (Connection connection = DatabaseConnection.getConnection();

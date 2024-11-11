@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.malivasileva.librarian.presentation.viewModels.BookViewModel;
 import com.malivasileva.model.Book;
+import com.malivasileva.presentation.R;
 import com.malivasileva.presentation.databinding.DetailBookBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -176,7 +177,11 @@ public class DetailsBookFragment extends Fragment {
         binding.reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                BooksLendingsFragment booksLendings = BooksLendingsFragment.newInstance(bookId);
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.l_frame, booksLendings)  // R.id.frame_layout — ID вашего FrameLayout
+                        .addToBackStack(null)  // Добавляет транзакцию в back stack
+                        .commit();
             }
         });
 

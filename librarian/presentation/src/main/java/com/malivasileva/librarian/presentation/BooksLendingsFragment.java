@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.malivasileva.librarian.presentation.adapters.LendingAdapter;
-import com.malivasileva.librarian.presentation.viewModels.ReadersLendingsViewModel;
+import com.malivasileva.librarian.presentation.viewModels.BookLendingsViewModel;
 import com.malivasileva.model.Lending;
 import com.malivasileva.presentation.R;
-import com.malivasileva.presentation.databinding.SearchFragmentBinding;
+import com.malivasileva.presentation.databinding.SearchFragmentWithActionBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,19 +24,20 @@ import java.util.ArrayList;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ReadersLendingsFragment extends Fragment {
+public class BooksLendingsFragment extends Fragment {
 
-    private static final String ARG_READER_ID = "reader_id";
-    private int readerId;
-    private SearchFragmentBinding binding;
+    BookLendingsViewModel viewModel;
+
+    private static final String ARG_BOOK_ID = "book_id";
+    private int bookId;
+    private SearchFragmentWithActionBinding binding;
     private LendingAdapter lendingAdapter;
-    private ReadersLendingsViewModel viewModel;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public static ReadersLendingsFragment newInstance(int readerId) {
-        ReadersLendingsFragment fragment = new ReadersLendingsFragment();
+    public static BooksLendingsFragment newInstance(int bookId) {
+        BooksLendingsFragment fragment = new BooksLendingsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_READER_ID, readerId);
+        args.putInt(ARG_BOOK_ID, bookId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,20 +46,19 @@ public class ReadersLendingsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            readerId = getArguments().getInt(ARG_READER_ID);
+            bookId = getArguments().getInt(ARG_BOOK_ID);
         }
-        viewModel = new ViewModelProvider(requireActivity()).get(ReadersLendingsViewModel.class);
-
-        viewModel.getLendingForReader(readerId);
+        viewModel = new ViewModelProvider(requireActivity()).get(BookLendingsViewModel.class);
+        viewModel.getBook(bookId);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = SearchFragmentWithActionBinding.inflate(inflater, container, false);
 
-        binding = SearchFragmentBinding.inflate(inflater, container, false);
-
-        binding.searchView.setQueryHint("Искать выдачу");
+        binding.searchView.setQueryHint("Искать выдачи");
+        binding.button.setText("Экспортировать");
 
         lendingAdapter = new LendingAdapter(new ArrayList<Lending>(), lending -> {
             DetailsLendingFragment detailFragment = DetailsLendingFragment.newInstance(lending.getId());
@@ -82,6 +82,7 @@ public class ReadersLendingsFragment extends Fragment {
         viewModel.getEventLiveData().observe(getViewLifecycleOwner(), msg -> {
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
         });
+
 
         return binding.getRoot();
     }
