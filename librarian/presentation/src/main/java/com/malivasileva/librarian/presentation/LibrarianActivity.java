@@ -40,6 +40,14 @@ public class LibrarianActivity extends AppCompatActivity {
             long lend = R.id.item_l_lendings;
             long readers = R.id.item_l_readers;
 
+            // Проверяем, нужно ли скрыть или отключить кнопку fab
+            if (id == specialty || id == readers) {
+                binding.fab.setVisibility(View.GONE);
+            } else {
+                binding.fab.setVisibility(View.VISIBLE);
+
+            }
+
             if (id == lend) replaceFragment(new lLendingsFragment());
             else if (id == books) replaceFragment(new lBooksFragment());
             else if (id == specialty) replaceFragment(new lSpecialtyFragment());
@@ -48,7 +56,6 @@ public class LibrarianActivity extends AppCompatActivity {
 
             return true;
         });
-
 
         binding.topAppBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.exit) {
