@@ -43,7 +43,7 @@ public class lLendingsFragment extends Fragment {
         binding = SearchFragmentBinding.inflate(inflater, container, false);
 //        rootBinding = LMainBinding.inflate(inflater, container, false);
 
-        lendingAdapter = new LendingAdapter(new ArrayList< Lending >(), lending -> {
+        lendingAdapter = new LendingAdapter(new ArrayList<Lending>(), lending -> {
             DetailsLendingFragment detailFragment = DetailsLendingFragment.newInstance(lending.getId());
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.l_frame, detailFragment)  // R.id.frame_layout — ID вашего FrameLayout

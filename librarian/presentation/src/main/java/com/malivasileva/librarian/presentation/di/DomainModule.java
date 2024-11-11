@@ -14,6 +14,8 @@ import com.malivasileva.librarian.domain.usecases.GetCurrentLendingsUseCase;
 import com.malivasileva.librarian.domain.usecases.GetAllSpecialtiesUseCase;
 import com.malivasileva.librarian.domain.usecases.GetBookWithIdUseCase;
 import com.malivasileva.librarian.domain.usecases.GetLendingWithIdUseCase;
+import com.malivasileva.librarian.domain.usecases.GetLendingsForBookWithIdUseCase;
+import com.malivasileva.librarian.domain.usecases.GetLendingsForReaderWithId;
 import com.malivasileva.librarian.domain.usecases.GetReaderWithIdUseCase;
 import com.malivasileva.librarian.domain.usecases.GetReadersWithActiveLendingsUseCase;
 import com.malivasileva.librarian.domain.usecases.ReturnBookUseCase;
@@ -115,5 +117,15 @@ public class DomainModule {
     @Provides
     public AddBookUseCase provideAddBookUseCase (LibrBookRepository bookRepository) {
         return new AddBookUseCase(bookRepository);
+    }
+
+    @Provides
+    public GetLendingsForBookWithIdUseCase provideGetLendingsForBookWithIdUseCase (LibrLendingRepository lendingRepository) {
+        return new GetLendingsForBookWithIdUseCase(lendingRepository);
+    }
+
+    @Provides
+    public GetLendingsForReaderWithId provideGetLendingsForReaderWithId (LibrLendingRepository lendingRepository) {
+        return new GetLendingsForReaderWithId(lendingRepository);
     }
 }

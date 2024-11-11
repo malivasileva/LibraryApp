@@ -173,6 +173,13 @@ public class DetailsBookFragment extends Fragment {
             }
         });
 
+        binding.reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return binding.getRoot();
     }
 

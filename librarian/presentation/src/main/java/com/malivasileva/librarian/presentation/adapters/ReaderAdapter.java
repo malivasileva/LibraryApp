@@ -16,24 +16,31 @@ import java.util.List;
 
 public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderViewHolder>{
 
-    private List<Reader> readerList;
+    public interface OnItemClickListener {
+        void onItemClick(Reader reader);
+    }
 
-    public ReaderAdapter(List<Reader> readerList) {
+    private List<Reader> readerList;
+    private final OnItemClickListener listener;
+
+    public ReaderAdapter(
+            List<Reader> readerList,
+            OnItemClickListener listener
+    ) {
         this.readerList = readerList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ReaderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("govno-adapter", "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reader_card, parent, false);
         return new ReaderViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReaderViewHolder holder, int position) {
-        Log.d("govno-adapter", "onBindViewHolder");
-        holder.bind(readerList.get(position));
+        holder.bind(readerList.get(position), listener);
     }
 
     @Override
@@ -42,7 +49,6 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
     }
 
     public void updateReaders(List<Reader> newReaders) {
-        Log.d("govno-adapter", "updateReaders");
         readerList.clear();
         readerList.addAll(newReaders);
         notifyDataSetChanged();
@@ -63,8 +69,9 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
             address = itemView.findViewById(R.id.reader_address);
         }
 
-        public void bind(Reader reader) {
-            Log.d("govno-bind", reader.getName());
+        public void bind(Reader reader, final ReaderAdapter.OnItemClickListener listener) {
+            itemView.setOnClickListener(v -> listener.onItemClick(reader));
+
             readerNum.setText(String.valueOf(reader.getCard()));
             name.setText(reader.getName());
             phone.setText(reader.getPhone());

@@ -1,6 +1,5 @@
 package com.malivasileva.data;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.malivasileva.data.entities.BookEntity;
@@ -25,10 +24,8 @@ public class DatabaseService {
     private final String TAG = "DatabaseService";
 
     //todo lendingsRepo
-    //current lendings
     //lendings for book
     //todo libr-readers
-    //reader with id ??
 
     public Single<List<SpecialtyEntity>> getAllSpecialties() {
         return Single.fromCallable(() -> {
@@ -427,8 +424,6 @@ public class DatabaseService {
         });
     }
 
-
-
     public Single<LendingEntity> getLendingWitId(int id) {
         return Single.fromCallable(() -> {
             LendingEntity lending;
@@ -465,9 +460,17 @@ public class DatabaseService {
     public Single<List<LendingEntity>> getLendingsForReader(long reader) {
         return Single.fromCallable(() -> {
             List<LendingEntity> lendings = new ArrayList<LendingEntity>();
-            String query = "SELECT L.lending_num, B.title, B.authors, L.lending_date, L.required_return_date, L.fact_return_date " +
-                    "FROM book_lendings L, books B " +
-                    "WHERE card_num = ? and L.book_num = B.book_num " +
+            String query = "SELECT L.lending_num, " +
+                    "R.card_num, " +
+                    "R.name, " +
+                    "B.book_num, " +
+                    "B.title, " +
+                    "B.authors, " +
+                    "L.lending_date, " +
+                    "L.required_return_date, " +
+                    "L.fact_return_date " +
+                    "FROM book_lendings L, books B, readers R " +
+                    "WHERE R.card_num = ? and L.book_num = B.book_num and R.card_num = L.card_num " +
                     "ORDER BY lending_date DESC";
 
             try (Connection connection = DatabaseConnection.getConnection();
@@ -481,9 +484,9 @@ public class DatabaseService {
                     // Создаем объект Book из данных, полученных из базы данных
                     LendingEntity lending = new LendingEntity(
                             resultSet.getInt("lending_num"),
-                            0,
-                            "name",
-                            0,
+                            resultSet.getInt("card_num"),
+                            resultSet.getString("name"),
+                            resultSet.getInt("book_num"),
                             resultSet.getString("title"),
                             resultSet.getString("authors"),
                             resultSet.getDate("lending_date"),
@@ -500,7 +503,15 @@ public class DatabaseService {
     public Single<List<LendingEntity>> getLendingsForBook(int book) { //todo
         return Single.fromCallable(() -> {
             List<LendingEntity> lendings = new ArrayList<LendingEntity>();
-            String query = "SELECT L.lending_num, R.card_num, R.name, B.book_num, B.title, B.authors, L.lending_date, L.required_return_date, L.fact_return_date " +
+            String query = "SELECT L.lending_num, " +
+                    "R.card_num, " +
+                    "R.name, " +
+                    "B.book_num, " +
+                    "B.title, " +
+                    "B.authors, " +
+                    "L.lending_date, " +
+                    "L.required_return_date, " +
+                    "L.fact_return_date " +
                     "FROM book_lendings L, books B, readers R  " +
                     "WHERE book_num = ? and L.book_num = B.book_num and L.card_num = R.card_num " +
                     "ORDER BY lending_date DESC";
@@ -516,9 +527,9 @@ public class DatabaseService {
                     // Создаем объект Book из данных, полученных из базы данных
                     LendingEntity lending = new LendingEntity(
                             resultSet.getInt("lending_num"),
-                            0,
-                            "name",
-                            0,
+                            resultSet.getInt("card_num"),
+                            resultSet.getString("name"),
+                            resultSet.getInt("book_num"),
                             resultSet.getString("title"),
                             resultSet.getString("authors"),
                             resultSet.getDate("lending_date"),

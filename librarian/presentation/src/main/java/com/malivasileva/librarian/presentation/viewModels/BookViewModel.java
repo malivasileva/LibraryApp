@@ -23,8 +23,8 @@ public class BookViewModel extends ViewModel {
     private final UpdateBookUseCase updateBookUseCase;
     private final DeleteBookUseCase deleteBookUseCase;
 
-    private MutableLiveData<Book> bookLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> eventLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Book> bookLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> eventLiveData = new MutableLiveData<>();
 
     CompositeDisposable disposable = new CompositeDisposable();
 

@@ -23,8 +23,31 @@ public class LibrLendingsRepositoryImpl implements LibrLendingRepository {
     }
 
     @Override
-    public Single<List<Lending>> getLendingsForBookWith(int num) {
-        return null;
+    public Single<List<Lending>> getLendingsForBookWithId(int num) {
+
+        return databaseService.getLendingsForBook(num)
+                .map( entities -> entities.stream()
+                        .map(this::mapEntityToModel)
+                        .collect(Collectors.toList())
+                )
+                .onErrorReturn( throwable -> {
+                    Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
+                    return Collections.emptyList();
+                });
+    }
+
+    @Override
+    public Single<List<Lending>> getLendingsForReaderWithId(int num) {
+
+        return databaseService.getLendingsForReader(num)
+                .map( entities -> entities.stream()
+                        .map(this::mapEntityToModel)
+                        .collect(Collectors.toList())
+                )
+                .onErrorReturn( throwable -> {
+                    Log.e(TAG, "Произошла ошибка: " + throwable.getMessage(), throwable);
+                    return Collections.emptyList();
+                });
     }
 
     @Override

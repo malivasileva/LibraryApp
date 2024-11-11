@@ -41,14 +41,19 @@ public class lReadersFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = SearchFragmentWithActionBinding.inflate(inflater, container, false);
 
-        readerAdapter = new ReaderAdapter(new ArrayList<>());
+        readerAdapter = new ReaderAdapter(new ArrayList<>(), reader -> {
+            ReadersLendingsFragment readersLendings = ReadersLendingsFragment.newInstance((int) reader.getCard());
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.l_frame, readersLendings)  // R.id.frame_layout — ID вашего FrameLayout
+                    .addToBackStack(null)  // Добавляет транзакцию в back stack
+                    .commit();
+        });
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(readerAdapter);
 
         binding.searchView.setQueryHint(getString(R.string.search_readers));
 
         viewModel.getReadersLiveData().observe(getViewLifecycleOwner(), readers -> {
-            Log.d("govno-observe", readers.toString());
             if (readers != null) {
                 readerAdapter.updateReaders(readers);
                 if (!readers.isEmpty()) {
