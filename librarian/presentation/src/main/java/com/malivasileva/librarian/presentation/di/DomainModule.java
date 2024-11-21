@@ -15,6 +15,7 @@ import com.malivasileva.librarian.domain.usecases.DeleteBookFromSylabusUseCase;
 import com.malivasileva.librarian.domain.usecases.DeleteBookUseCase;
 import com.malivasileva.librarian.domain.usecases.ExitLibrarianUseCase;
 import com.malivasileva.librarian.domain.usecases.ExpandReturnDateUseCase;
+import com.malivasileva.librarian.domain.usecases.GetBooksForSpecialtyAndSeriesUseCase;
 import com.malivasileva.librarian.domain.usecases.GetCurrentLendingsUseCase;
 import com.malivasileva.librarian.domain.usecases.GetAllSpecialtiesUseCase;
 import com.malivasileva.librarian.domain.usecases.GetBookWithIdUseCase;
@@ -160,5 +161,10 @@ public class DomainModule {
     @Provides
     public DeleteBookFromSylabusUseCase provideDeleteBookFromSylabusUseCase (SylabusRepository sylabusRepository) {
         return new DeleteBookFromSylabusUseCase(sylabusRepository);
+    }
+
+    @Provides
+    public GetBooksForSpecialtyAndSeriesUseCase provideGetBooksForSpecialtyAndSeriesUseCase (LibrBookRepository bookRepository) {
+        return new GetBooksForSpecialtyAndSeriesUseCase(bookRepository);
     }
 }

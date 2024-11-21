@@ -35,6 +35,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SylabusFragment extends Fragment {
     private static final String ARG_SPEC_ID = "specialty_id";
+    private static final String ARG_TITLE = "spec_title";
+    private String title = "error";
     private int specialtyId;
     private int selectedSubject = -1;
     private int selectedBook = -1;
@@ -44,10 +46,11 @@ public class SylabusFragment extends Fragment {
     private SylabusAdapter sylabusAdapter;
     private SylabusViewModel viewModel;
 
-    public static SylabusFragment newInstance(int specialtyId) {
+    public static SylabusFragment newInstance(int specialtyId, String title) {
         SylabusFragment fragment = new SylabusFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SPEC_ID, specialtyId);
+        args.putString(ARG_TITLE, title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,6 +62,7 @@ public class SylabusFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(SylabusViewModel.class);
         if (getArguments() != null) {
             specialtyId = getArguments().getInt(ARG_SPEC_ID);
+            title = getArguments().getString(ARG_TITLE);
             viewModel.getSylabus(specialtyId);
             viewModel.getSeries();
             viewModel.getSubjects(specialtyId);
@@ -141,8 +145,8 @@ public class SylabusFragment extends Fragment {
 
                 listView.setOnItemClickListener((parent, view, position, id) -> {
                     StudySeries selectedSeries = (StudySeries) parent.getItemAtPosition(position);
-                    int selectedSeriesId = selectedSeries.getNum();
-                    FormForthFragment formForthFragment = FormForthFragment.newInstance(specialtyId, selectedSeriesId);
+//                    int selectedSeriesId = selectedSeries.getNum();
+                    FormForthFragment formForthFragment = FormForthFragment.newInstance(specialtyId, selectedSeries.getNum(), selectedSeries.getName());
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.l_frame, formForthFragment)
                             .addToBackStack(null)
@@ -219,5 +223,11 @@ public class SylabusFragment extends Fragment {
             }
         });
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((LibrarianActivity) requireActivity()).updateTopAppTitle(title);
     }
 }

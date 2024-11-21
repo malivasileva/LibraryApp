@@ -444,6 +444,47 @@ public class DatabaseService {
         });
     }
 
+    public Single<List<BookEntity>> getBooksForSpecialtyAndSeries(int specialty, int series) {
+        return Single.fromCallable(() -> {
+            List<BookEntity> books = new ArrayList<>();
+            String query = "SELECT B.book_num, B.title, B.authors, B.publisher_address," +
+                    " B.publisher_name, B.page_total, B.price_num, B.copy_total, B.publishing_year " +
+                    "FROM books B, specialties Spec, study_plans Sp, study_series Ser, " +
+                    "sylabuses Syl, subjects Sub " +
+                    "WHERE Spec.specialty_num = ? and Ser.series_num = ? and " +
+                    "Syl.book_num = B.book_num and Syl.study_plan_num = Sp.study_plan_num and " +
+                    "Sp.subject_num = Sub.subject_num and Sub.study_series_num = Ser.series_num";
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(query);
+                 ) {
+
+                statement.setInt(1, specialty);
+                statement.setInt(2, series);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    BookEntity book = new BookEntity(
+                            resultSet.getInt("book_num"),
+                            resultSet.getString("title"),
+                            resultSet.getString("authors"),
+                            resultSet.getString("publisher_address"),
+                            resultSet.getString("publisher_name"),
+                            resultSet.getInt("page_total"),
+                            resultSet.getFloat("price_num"),
+                            resultSet.getInt("copy_total"),
+                            resultSet.getInt("publishing_year")
+                    );
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                throw new RuntimeException(e);
+            }
+            return books;
+        });
+    }
+
     public Single<Boolean> addLending(int cardNum, int bookNum) {
         return Single.create(emitter -> {
             // SQL-запрос для добавления новой выдачи книги

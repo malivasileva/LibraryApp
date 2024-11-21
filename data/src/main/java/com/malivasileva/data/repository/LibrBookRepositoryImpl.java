@@ -99,6 +99,15 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 );*/
     }
 
+    @Override
+    public Single<List<Book>> getBooksForSpecialtyAndSeries(int specialty, int series) {
+        return databaseService.getBooksForSpecialtyAndSeries(specialty, series)
+                .map(bookEntities -> bookEntities.stream()
+                        .map(this::mapEntityToModel)
+                        .collect(Collectors.toList()));
+        //todo on error return?
+    }
+
     private Book mapEntityToModel(BookEntity entity) {
         return new Book(
                 entity.getId(),

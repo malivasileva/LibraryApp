@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.malivasileva.librarian.presentation.viewModels.LibrarianViewModel;
 import com.malivasileva.presentation.R;
 import com.malivasileva.presentation.databinding.LMainBinding;
@@ -119,5 +119,10 @@ public class LibrarianActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         this.finish();
+    }
+
+    public void updateTopAppTitle(String title) {
+        MaterialToolbar topBar = findViewById(R.id.topAppBar);
+        topBar.setTitle(title);
     }
 }

@@ -42,7 +42,7 @@ public class lSpecialtyFragment extends Fragment {
         binding = SearchFragmentBinding.inflate(inflater, container, false);
 
         adapter = new SpecialtyAdapter(new ArrayList<>(), specialty -> {
-            SylabusFragment sylabus = SylabusFragment.newInstance(specialty.getNum());
+            SylabusFragment sylabus = SylabusFragment.newInstance(specialty.getNum(), specialty.getName());
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.l_frame, sylabus)  // R.id.frame_layout — ID вашего FrameLayout
                     .addToBackStack(null)  // Добавляет транзакцию в back stack
