@@ -1,10 +1,10 @@
 package com.malivasileva.data.entities;
 
-public class SubjectEntity {
+public class StudySeriesEntity {
     private int num;
     private String name;
 
-    public SubjectEntity(int num, String name) {
+    public StudySeriesEntity(int num, String name) {
         this.num = num;
         this.name = name;
     }
@@ -16,5 +16,4 @@ public class SubjectEntity {
     public String getName() {
         return name;
     }
-
 }

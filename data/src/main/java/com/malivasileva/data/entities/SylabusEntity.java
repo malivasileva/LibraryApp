@@ -1,13 +1,13 @@
-package com.malivasileva.model;
+package com.malivasileva.data.entities;
 
-public class Sylabus {
+public class SylabusEntity {
     private String subject;
     private int bookNum;
     private String title;
     private String authors;
     private int studyPlanNum;
 
-    public Sylabus(String subject, int bookNum, String title, String authors, int studyPlanNum) {
+    public SylabusEntity(String subject, int bookNum, String title, String authors, int studyPlanNum) {
         this.subject = subject;
         this.bookNum = bookNum;
         this.title = title;

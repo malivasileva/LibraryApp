@@ -24,6 +24,19 @@
             android:queryHint="@string/search_specialty"
             />
 
+        <Button
+            android:id="@+id/hidden_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_large"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="@dimen/padding_mid"
+            android:paddingBottom="@dimen/padding_small"
+            android:visibility="invisible"
+            android:text="@string/form_four"
+            />
+
+
         <TextView
             android:id="@+id/text_placeholder"
             android:layout_width="wrap_content"

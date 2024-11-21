@@ -17,9 +17,18 @@ import java.util.List;
 
 public class SpecialtyAdapter extends RecyclerView.Adapter<SpecialtyAdapter.SpecialtyViewHolder> {
 
-    private List<Specialty> specialtyList;
+    public interface OnItemClickListener {
+        void OnItemClick(Specialty specialty);
+    }
 
-    public SpecialtyAdapter (List<Specialty> specialtyList) {
+    private List<Specialty> specialtyList;
+    private OnItemClickListener listener;
+
+    public SpecialtyAdapter (
+            List<Specialty> specialtyList,
+            OnItemClickListener listener
+    ) {
+        this.listener = listener;
         this.specialtyList = specialtyList;
     }
 
@@ -32,7 +41,7 @@ public class SpecialtyAdapter extends RecyclerView.Adapter<SpecialtyAdapter.Spec
 
     @Override
     public void onBindViewHolder(@NonNull SpecialtyViewHolder holder, int position) {
-        holder.bind(specialtyList.get(position));
+        holder.bind(specialtyList.get(position), listener);
     }
 
     @Override
@@ -57,7 +66,9 @@ public class SpecialtyAdapter extends RecyclerView.Adapter<SpecialtyAdapter.Spec
             name = itemView.findViewById(R.id.specialty_name);
         }
 
-        public void bind(Specialty specialty) {
+        public void bind(Specialty specialty, final OnItemClickListener listener) {
+            itemView.setOnClickListener(v -> listener.OnItemClick(specialty));
+
             num.setText(String.valueOf(specialty.getNum()));
             name.setText(specialty.getName());
         }

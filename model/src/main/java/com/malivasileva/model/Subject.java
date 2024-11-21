@@ -3,12 +3,10 @@ package com.malivasileva.model;
 public class Subject {
     private int num;
     private String name;
-    private String studySeriesName;
 
-    public Subject(int num, String name, String studySeriesName) {
+    public Subject(int num, String name) {
         this.num = num;
         this.name = name;
-        this.studySeriesName = studySeriesName;
     }
 
     public int getNum() {
@@ -19,7 +17,8 @@ public class Subject {
         return name;
     }
 
-    public String getStudySeriesName() {
-        return studySeriesName;
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -6,6 +6,9 @@ import com.malivasileva.data.entities.BookEntity;
 import com.malivasileva.data.entities.LendingEntity;
 import com.malivasileva.data.entities.ReaderEntity;
 import com.malivasileva.data.entities.SpecialtyEntity;
+import com.malivasileva.data.entities.StudySeriesEntity;
+import com.malivasileva.data.entities.SubjectEntity;
+import com.malivasileva.data.entities.SylabusEntity;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,14 +21,33 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 
-//todo LIBRARIAN CONNECTION
 public class DatabaseService {
 
     private final String TAG = "DatabaseService";
 
-    //todo lendingsRepo
-    //lendings for book
-    //todo libr-readers
+    public Single<List<StudySeriesEntity>> getStudySeries() {
+        return Single.fromCallable(() -> {
+            List<StudySeriesEntity> specialties = new ArrayList<>();
+            String query = "SELECT * FROM public.study_series";
+            try (Connection connection = DatabaseConnection.getLibrConnection();
+                 PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()
+            ) {
+                while (resultSet.next()) {
+                    StudySeriesEntity specialty = new StudySeriesEntity(
+                            resultSet.getInt("series_num"),
+                            resultSet.getString("series_name")
+                    );
+                    specialties.add(specialty);
+                }
+
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                throw new RuntimeException(e);
+            }
+            return specialties;
+        });
+    }
 
     public Single<List<SpecialtyEntity>> getAllSpecialties() {
         return Single.fromCallable(() -> {
@@ -72,6 +94,119 @@ public class DatabaseService {
                 throw new RuntimeException(e);
             }
             return specialties;
+        });
+    }
+
+    public Single<List<SylabusEntity>> getSylabusFor(int specialty) {
+        return Single.fromCallable(() -> {
+            List<SylabusEntity> sylabusEntities = new ArrayList<SylabusEntity>();
+            String query = "SELECT S.book_num, Sub.subject_name, B.title, B.authors, S.study_plan_num " +
+                    "FROM sylabuses S, subjects Sub, books B, study_plans Sp " +
+                    "WHERE Sp.specialty_num = ? and " +
+                    " Sp.study_plan_num = S.study_plan_num and " +
+                    "    S.book_num = B.book_num and " +
+                    "    Sub.subject_num = Sp.subject_num";
+
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setInt(1, specialty);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    // Создаем объект Book из данных, полученных из базы данных
+                    SylabusEntity sylabusEntity = new SylabusEntity(
+                            resultSet.getString("subject_name"),
+                            resultSet.getInt("book_num"),
+                            resultSet.getString("title"),
+                            resultSet.getString("authors"),
+                            resultSet.getInt("study_plan_num")
+                    );
+                    sylabusEntities.add(sylabusEntity);
+                }
+            }
+            return sylabusEntities;
+        });
+    }
+
+    public Single<List<SubjectEntity>> getSubjectsForSpecialty(int specialty) {
+        return Single.fromCallable(() -> {
+            List<SubjectEntity> subjectEntities = new ArrayList<SubjectEntity>();
+            String query = "SELECT Sub.subject_num, Sub.subject_name " +
+                    "FROM study_plans Sp, subjects Sub " +
+                    "WHERE Sp.specialty_num = ? and Sp.subject_num = Sub.subject_num";
+
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setInt(1, specialty);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    // Создаем объект Book из данных, полученных из базы данных
+                    SubjectEntity subjectEntity = new SubjectEntity(
+                            resultSet.getInt("subject_num"),
+                            resultSet.getString("subject_name")
+                    );
+                    subjectEntities.add(subjectEntity);
+                }
+            }
+            return subjectEntities;
+        });
+    }
+
+    public Single<Boolean> deleteBookFromSylabus(int studyPlan, int book) {
+        return Single.create( emitter -> {
+            String query = "DELETE FROM public.sylabuses WHERE study_plan_num = ? and book_num = ?;";
+            try (Connection connection = DatabaseConnection.getLibrConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setInt(1, studyPlan);
+                statement.setInt(2, book);
+
+                int rowAffected = statement.executeUpdate();
+
+                if (rowAffected > 0) {
+                    emitter.onSuccess(true);
+                } else {
+                    emitter.onSuccess(false);
+                }
+
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                emitter.onError(e);
+            }
+        });
+    }
+
+    public Single<Boolean> addBookInSylabus(int studyPlan, int book) {
+        return Single.create(emitter -> {
+            String query = "INSERT INTO public.sylabuses(book_num, study_plan_num) VALUES (?, ?) ON CONFLICT DO NOTHING;";
+
+            try (Connection connection = DatabaseConnection.getLibrConnection()) {
+                assert connection != null;
+                try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+                    statement.setInt(1, book);
+                    statement.setInt(2, studyPlan);
+
+                    // Выполняем запрос и проверяем количество затронутых строк
+                    int rowsAffected = statement.executeUpdate();
+
+                    // Если строка добавлена успешно, возвращаем true
+                    if (rowsAffected > 0) {
+                        emitter.onSuccess(true);
+                    } else {
+                        emitter.onSuccess(false);
+                    }
+
+                }
+            } catch (SQLException e) {
+                Log.e(TAG, "Произошла ошибка: " + e.getMessage(), e);
+                emitter.onError(e);
+            }
         });
     }
 
@@ -337,7 +472,6 @@ public class DatabaseService {
             }
         });
     }
-
 
     public Single<Boolean> updateLending(LendingEntity lending) {
         return Single.create( emitter -> {

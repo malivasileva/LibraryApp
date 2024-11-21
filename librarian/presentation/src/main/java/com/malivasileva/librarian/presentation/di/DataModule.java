@@ -7,11 +7,17 @@ import com.malivasileva.data.repository.LibrLendingsRepositoryImpl;
 import com.malivasileva.data.repository.LibrReaderRepositoryImpl;
 import com.malivasileva.data.repository.LibrarianRepositoryImpl;
 import com.malivasileva.data.repository.SpecialtyRepositoryImpl;
+import com.malivasileva.data.repository.StudyPlanRepositoryImpl;
+import com.malivasileva.data.repository.StudySeriesRepositoryImpl;
+import com.malivasileva.data.repository.SylabusRepositoryImpl;
 import com.malivasileva.librarian.domain.repositories.LibrBookRepository;
 import com.malivasileva.librarian.domain.repositories.LibrLendingRepository;
 import com.malivasileva.librarian.domain.repositories.LibrReaderRepository;
 import com.malivasileva.librarian.domain.repositories.LibrarianRepository;
 import com.malivasileva.librarian.domain.repositories.SpecialtyRepository;
+import com.malivasileva.librarian.domain.repositories.StudyPlanRepository;
+import com.malivasileva.librarian.domain.repositories.StudySeriesRepository;
+import com.malivasileva.librarian.domain.repositories.SylabusRepository;
 
 import javax.inject.Singleton;
 
@@ -52,5 +58,23 @@ public class DataModule {
     @Singleton
     public SpecialtyRepository provideSpecialtyRepository(DatabaseService databaseService) {
         return new SpecialtyRepositoryImpl(databaseService);
+    }
+
+    @Provides
+    @Singleton
+    public SylabusRepository provideSylabusRepository(DatabaseService databaseService) {
+        return new SylabusRepositoryImpl(databaseService);
+    }
+
+    @Provides
+    @Singleton
+    public StudySeriesRepository provideStudySeriesRepository(DatabaseService databaseService) {
+        return new StudySeriesRepositoryImpl(databaseService);
+    }
+
+    @Provides
+    @Singleton
+    public StudyPlanRepository provideStudyPlanRepository(DatabaseService databaseService) {
+        return new StudyPlanRepositoryImpl(databaseService);
     }
 }

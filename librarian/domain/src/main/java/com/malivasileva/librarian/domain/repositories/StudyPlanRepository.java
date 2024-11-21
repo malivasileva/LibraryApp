@@ -6,6 +6,6 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
-public interface SubjectRepository {
-    Single<List<Subject>> getSubjectsFor (int specialtyNum);
+public interface StudyPlanRepository {
+    Single<List<Subject>> getSubjectsForSpecialty(int id);
 }

@@ -34,7 +34,6 @@ public class lSpecialtyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(LibrarianViewModel.class);
-
     }
 
     @Override
@@ -42,7 +41,13 @@ public class lSpecialtyFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = SearchFragmentBinding.inflate(inflater, container, false);
 
-        adapter = new SpecialtyAdapter(new ArrayList<>());
+        adapter = new SpecialtyAdapter(new ArrayList<>(), specialty -> {
+            SylabusFragment sylabus = SylabusFragment.newInstance(specialty.getNum());
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.l_frame, sylabus)  // R.id.frame_layout — ID вашего FrameLayout
+                    .addToBackStack(null)  // Добавляет транзакцию в back stack
+                    .commit();
+        });
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
 

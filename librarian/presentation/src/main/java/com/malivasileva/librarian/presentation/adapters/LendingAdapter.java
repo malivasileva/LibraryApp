@@ -74,17 +74,12 @@ public class LendingAdapter extends RecyclerView.Adapter<LendingAdapter.LendingV
                     // Если строка поиска пустая, возвращаем оригинальный список
                     filteredResults.addAll(originalList);
                 } else {
-                    Log.d("adapter-1", constraint.toString());
                     String filterPattern = constraint.toString().toLowerCase().trim();
-                    Log.d("adapter-2", filterPattern);
                     for (Lending lending : originalList) {
                         if (lending.getReaderName().toLowerCase().contains(filterPattern) ||
                                 lending.getTitle().toLowerCase().contains(filterPattern) ||
                                 lending.getAuthors().toLowerCase().contains(filterPattern)) {
                             filteredResults.add(lending);
-                            Log.d("adapter-3-name", lending.getReaderName().toLowerCase());
-                            Log.d("adapter-3-title", lending.getTitle().toLowerCase());
-                            Log.d("adapter-3-authors", lending.getAuthors().toLowerCase());
                         }
                     }
                 }

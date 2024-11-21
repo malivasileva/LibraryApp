@@ -5,8 +5,13 @@ import com.malivasileva.librarian.domain.repositories.LibrLendingRepository;
 import com.malivasileva.librarian.domain.repositories.LibrReaderRepository;
 import com.malivasileva.librarian.domain.repositories.LibrarianRepository;
 import com.malivasileva.librarian.domain.repositories.SpecialtyRepository;
+import com.malivasileva.librarian.domain.repositories.StudyPlanRepository;
+import com.malivasileva.librarian.domain.repositories.StudySeriesRepository;
+import com.malivasileva.librarian.domain.repositories.SylabusRepository;
+import com.malivasileva.librarian.domain.usecases.AddBookInSylabusUseCase;
 import com.malivasileva.librarian.domain.usecases.AddBookUseCase;
 import com.malivasileva.librarian.domain.usecases.AddLendingUseCase;
+import com.malivasileva.librarian.domain.usecases.DeleteBookFromSylabusUseCase;
 import com.malivasileva.librarian.domain.usecases.DeleteBookUseCase;
 import com.malivasileva.librarian.domain.usecases.ExitLibrarianUseCase;
 import com.malivasileva.librarian.domain.usecases.ExpandReturnDateUseCase;
@@ -18,6 +23,9 @@ import com.malivasileva.librarian.domain.usecases.GetLendingsForBookWithIdUseCas
 import com.malivasileva.librarian.domain.usecases.GetLendingsForReaderWithId;
 import com.malivasileva.librarian.domain.usecases.GetReaderWithIdUseCase;
 import com.malivasileva.librarian.domain.usecases.GetReadersWithActiveLendingsUseCase;
+import com.malivasileva.librarian.domain.usecases.GetStudySeriesUseCase;
+import com.malivasileva.librarian.domain.usecases.GetSubjectsForSpecialtyUseCase;
+import com.malivasileva.librarian.domain.usecases.GetSylabusForSpecialtyUseCase;
 import com.malivasileva.librarian.domain.usecases.ReturnBookUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchBooksUseCase;
 import com.malivasileva.librarian.domain.usecases.SearchReaderUseCase;
@@ -127,5 +135,30 @@ public class DomainModule {
     @Provides
     public GetLendingsForReaderWithId provideGetLendingsForReaderWithId (LibrLendingRepository lendingRepository) {
         return new GetLendingsForReaderWithId(lendingRepository);
+    }
+
+    @Provides
+    public GetSylabusForSpecialtyUseCase provideGetSylabusForSpecialtyUseCase (SylabusRepository sylabusRepository) {
+        return new GetSylabusForSpecialtyUseCase(sylabusRepository);
+    }
+
+    @Provides
+    public GetStudySeriesUseCase provideGetStudySeriesUseCase (StudySeriesRepository studySeriesRepository) {
+        return new GetStudySeriesUseCase(studySeriesRepository);
+    }
+
+    @Provides
+    public GetSubjectsForSpecialtyUseCase provideGetSubjectsForSpecialtyUseCase (StudyPlanRepository studyPlanRepository) {
+        return new GetSubjectsForSpecialtyUseCase(studyPlanRepository);
+    }
+
+    @Provides
+    public AddBookInSylabusUseCase provideAddBookInSylabusUseCase (SylabusRepository sylabusRepository) {
+        return new AddBookInSylabusUseCase(sylabusRepository);
+    }
+
+    @Provides
+    public DeleteBookFromSylabusUseCase provideDeleteBookFromSylabusUseCase (SylabusRepository sylabusRepository) {
+        return new DeleteBookFromSylabusUseCase(sylabusRepository);
     }
 }
