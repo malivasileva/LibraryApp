@@ -146,7 +146,7 @@ public class SylabusFragment extends Fragment {
                 listView.setOnItemClickListener((parent, view, position, id) -> {
                     StudySeries selectedSeries = (StudySeries) parent.getItemAtPosition(position);
 //                    int selectedSeriesId = selectedSeries.getNum();
-                    FormForthFragment formForthFragment = FormForthFragment.newInstance(specialtyId, selectedSeries.getNum(), selectedSeries.getName());
+                    FormForthFragment formForthFragment = FormForthFragment.newInstance(specialtyId, title, selectedSeries.getNum(), selectedSeries.getName());
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.l_frame, formForthFragment)
                             .addToBackStack(null)

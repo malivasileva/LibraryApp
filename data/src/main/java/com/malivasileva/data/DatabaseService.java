@@ -447,7 +447,7 @@ public class DatabaseService {
     public Single<List<BookEntity>> getBooksForSpecialtyAndSeries(int specialty, int series) {
         return Single.fromCallable(() -> {
             List<BookEntity> books = new ArrayList<>();
-            String query = "SELECT B.book_num, B.title, B.authors, B.publisher_address," +
+            String query = "SELECT Sub.subject_name, B.book_num, B.title, B.authors, B.publisher_address," +
                     " B.publisher_name, B.page_total, B.price_num, B.copy_total, B.publishing_year " +
                     "FROM books B, specialties Spec, study_plans Sp, study_series Ser, " +
                     "sylabuses Syl, subjects Sub " +
@@ -473,7 +473,8 @@ public class DatabaseService {
                             resultSet.getInt("page_total"),
                             resultSet.getFloat("price_num"),
                             resultSet.getInt("copy_total"),
-                            resultSet.getInt("publishing_year")
+                            resultSet.getInt("publishing_year"),
+                            resultSet.getString("subject_name")
                     );
                     books.add(book);
                 }

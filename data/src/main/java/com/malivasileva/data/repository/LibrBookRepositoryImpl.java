@@ -118,7 +118,8 @@ public class LibrBookRepositoryImpl implements LibrBookRepository {
                 entity.getPages(),
                 entity.getPrice(),
                 entity.getCopies(),
-                entity.getYear()
+                entity.getYear(),
+                entity.getSubject()
         );
     }
 

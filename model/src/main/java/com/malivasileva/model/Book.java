@@ -10,6 +10,7 @@ public class Book {
     private float price;
     private int copies;
     private int year;
+    private String subject = "error";
 
     public Book (int id, String title, String authors, String publisheAddress, String publisherName, int pages, float price, int copies, int year) {
         this.id = id;
@@ -21,6 +22,19 @@ public class Book {
         this.price = price;
         this.copies = copies;
         this.year = year;
+    }
+
+    public Book (int id, String title, String authors, String publisheAddress, String publisherName, int pages, float price, int copies, int year, String subject) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.publisheAddress = publisheAddress;
+        this.publisherName = publisherName;
+        this.pages = pages;
+        this.price = price;
+        this.copies = copies;
+        this.year = year;
+        this.subject = subject;
     }
 
     public Book (String title, String authors, String publisheAddress, String publisherName, int pages, float price, int copies, int year) {
@@ -69,5 +83,9 @@ public class Book {
 
     public String getPublisherName() {
         return publisherName;
+    }
+
+    public String getSubject() {
+        return subject;
     }
 }

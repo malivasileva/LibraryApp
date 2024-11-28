@@ -27,20 +27,27 @@ public class FormForthFragment extends Fragment {
     private SearchFragmentWithActionBinding binding;
 
     private static final String ARG_SPEC_ID = "specialty_id";
+    private static final String ARG_SPEC_TITLE = "specialty_title";
     private static final String ARG_CYCLE_ID = "cycle_id";
     private static final String ARG_TITLE = "title";
     private int specialtyId;
     private int cycleId;
+    private String specialtyTitle;
     private String title = "error";
     private FullBookAdapter fullBookAdapter;
     private FormFourViewModel viewModel;
 
-    public static FormForthFragment newInstance(int specialtyId, int cycleId, String pageTitle) {
+    public static FormForthFragment newInstance(
+            int specialtyId,
+            String specialtyTitle,
+            int cycleId,
+            String pageTitle) {
         FormForthFragment fragment = new FormForthFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SPEC_ID, specialtyId);
         args.putInt(ARG_CYCLE_ID, cycleId);
         args.putString(ARG_TITLE, pageTitle);
+        args.putString(ARG_SPEC_TITLE, specialtyTitle);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +62,7 @@ public class FormForthFragment extends Fragment {
             specialtyId = getArguments().getInt(ARG_SPEC_ID);
             cycleId = getArguments().getInt(ARG_CYCLE_ID);
             title = getArguments().getString(ARG_TITLE);
+            specialtyTitle = getArguments().getString(ARG_SPEC_TITLE);
 
             viewModel.getBooks(specialtyId, cycleId);
         }
@@ -76,7 +84,10 @@ public class FormForthFragment extends Fragment {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.export();
+                viewModel.export(requireActivity(),
+                        Integer.toString(specialtyId),
+                        specialtyTitle,
+                        title);
             }
         });
 
@@ -87,7 +98,6 @@ public class FormForthFragment extends Fragment {
         viewModel.getEventLiveData().observe(getViewLifecycleOwner(), msg -> {
             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         });
-
 
         return binding.getRoot();
     }

@@ -10,6 +10,7 @@ public class BookEntity {
     private float price;
     private int copies;
     private int year;
+    private String subject = "nothing";
 
     public BookEntity(int id, String title, String authors, String address, String publisher, int pages, float price, int copies, int year) {
         this.id = id;
@@ -21,6 +22,19 @@ public class BookEntity {
         this.price = price;
         this.copies = copies;
         this.year = year;
+    }
+
+    public BookEntity(int id, String title, String authors, String address, String publisher, int pages, float price, int copies, int year, String subject) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.address = address;
+        this.publisher = publisher;
+        this.pages = pages;
+        this.price = price;
+        this.copies = copies;
+        this.year = year;
+        this.subject = subject;
     }
 
     public float getPrice() {
@@ -58,4 +72,6 @@ public class BookEntity {
     public String getPublisher() {
         return publisher;
     }
+
+    public String getSubject() { return subject; }
 }
