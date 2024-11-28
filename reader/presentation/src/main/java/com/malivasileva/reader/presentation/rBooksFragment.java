@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.malivasileva.model.Book;
 import com.malivasileva.reader.presentation.adapters.BookAdapter;
 
 import java.util.ArrayList;
@@ -45,7 +46,12 @@ public class rBooksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_r_books, container, false);
         searchView = view.findViewById(R.id.search_book);
         recyclerView = view.findViewById(R.id.books_rv); // Убедитесь, что у вас есть этот ID в XML
-        bookAdapter = new BookAdapter(new ArrayList<>());
+        bookAdapter = new BookAdapter(new ArrayList<>(), new BookAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Book book) {
+                viewModel.checkIfBookAvailable(book.getId());
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(bookAdapter);

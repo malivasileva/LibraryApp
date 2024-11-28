@@ -868,4 +868,31 @@ public class DatabaseService {
             }
         });
     }
+
+    public Single<Boolean> isBookAvailable(int bookNum) {
+        return Single.create( emitter -> {
+            String query = "SELECT (B.copy_total > COUNT(BL.book_num)) AS is_available " +
+                    "FROM Books B " +
+                    "LEFT JOIN Book_lendings BL ON B.book_num = BL.book_num AND BL.fact_return_date IS NULL " +
+                    "WHERE B.book_num = ? " +
+                    "GROUP BY B.copy_total";
+            try (Connection connection = DatabaseConnection.getReaderConnection();
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setInt(1, bookNum);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    if (resultSet.getBoolean("is_available")) {
+                        emitter.onSuccess(true);
+                    } else {
+                        emitter.onSuccess(false);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                emitter.onError(e);
+            }
+        });
+    }
+
 }

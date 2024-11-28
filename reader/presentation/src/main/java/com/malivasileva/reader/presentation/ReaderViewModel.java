@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.malivasileva.model.Book;
 import com.malivasileva.model.Lending;
 import com.malivasileva.model.Reader;
+import com.malivasileva.reader.domain.usecases.CheckIfBookAvailableUseCase;
 import com.malivasileva.reader.domain.usecases.DeleteProfileUseCase;
 import com.malivasileva.reader.domain.usecases.ExitUseCase;
 import com.malivasileva.reader.domain.usecases.GetAllLendingsUseCase;
@@ -34,6 +35,7 @@ public class ReaderViewModel extends ViewModel {
     private final SaveProfileUseCase saveProfileUseCase;
     private final DeleteProfileUseCase deleteProfileUseCase;
     private final ExitUseCase exitUseCase;
+    private final CheckIfBookAvailableUseCase checkIfBookAvailableUseCase;
 
     private final MutableLiveData<Reader> profileLiveData = new MutableLiveData<>();
 
@@ -45,7 +47,15 @@ public class ReaderViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();  // Для управления подписками
 
     @Inject
-    public ReaderViewModel(GetAllLendingsUseCase getAllLendingsUseCase, GetCurrentLendingsUseCase getCurrentLendingsUseCase, SearchBookUseCase searchBookUseCase, GetProfileUseCase getProfileUseCase, SaveProfileUseCase saveProfileUseCase, DeleteProfileUseCase deleteProfileUseCase, ExitUseCase exitUseCase) {
+    public ReaderViewModel(
+            GetAllLendingsUseCase getAllLendingsUseCase,
+            GetCurrentLendingsUseCase getCurrentLendingsUseCase,
+            SearchBookUseCase searchBookUseCase,
+            GetProfileUseCase getProfileUseCase,
+            SaveProfileUseCase saveProfileUseCase,
+            DeleteProfileUseCase deleteProfileUseCase,
+            ExitUseCase exitUseCase,
+            CheckIfBookAvailableUseCase checkIfBookAvailableUseCase) {
         this.getAllLendingsUseCase = getAllLendingsUseCase;
         this.getCurrentLendingsUseCase = getCurrentLendingsUseCase;
         this.searchBookUseCase = searchBookUseCase;
@@ -53,6 +63,7 @@ public class ReaderViewModel extends ViewModel {
         this.saveProfileUseCase = saveProfileUseCase;
         this.deleteProfileUseCase = deleteProfileUseCase;
         this.exitUseCase = exitUseCase;
+        this.checkIfBookAvailableUseCase = checkIfBookAvailableUseCase;
 
         getProfile();
     }
@@ -157,6 +168,26 @@ public class ReaderViewModel extends ViewModel {
                                 },
                                 throwable -> {
                                     errorLiveData.setValue("Ошибка получения данных");
+                                }
+                        )
+        );
+    }
+
+    public void checkIfBookAvailable(int bookNum) {
+        disposables.add(
+                checkIfBookAvailableUseCase.execute(bookNum)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                result -> {
+                                    if (result) {
+                                        eventLiveData.setValue("Книга доступна");
+                                    } else {
+                                        errorLiveData.setValue("Нет свободных экземпляров");
+                                    }
+                                },
+                                throwable -> {
+                                    errorLiveData.setValue("Ошибка");
                                 }
                         )
         );

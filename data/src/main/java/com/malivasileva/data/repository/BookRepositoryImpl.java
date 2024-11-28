@@ -26,7 +26,6 @@ public class BookRepositoryImpl implements ReaderBookRepository {
                         .collect(Collectors.toList())
                 )
                 .onErrorReturn(throwable -> {
-//                    throwable.printStackTrace();
                     List<Book> noBooksFound = new ArrayList<>();
                     noBooksFound.add(new Book(
                             0,
@@ -42,6 +41,11 @@ public class BookRepositoryImpl implements ReaderBookRepository {
                     ));
                     return noBooksFound;
                 });
+    }
+
+    @Override
+    public Single<Boolean> isBookAvailable(int bookNum) {
+        return databaseService.isBookAvailable(bookNum);
     }
 
     private Book mapEntityToModel(BookEntity entity) {
