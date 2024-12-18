@@ -218,7 +218,6 @@ public class FormFourViewModel extends ViewModel {
     }
 
     private int calculateTextLines(Paint paint, String text, int maxWidth) {
-        Log.d("govno", text);
         String[] words = text.split(" ");
         StringBuilder line = new StringBuilder();
         int lines = 1;

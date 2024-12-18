@@ -97,6 +97,13 @@ public class BooksLendingsFragment extends Fragment {
             }
         });
 
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.exportToPdf(requireActivity(), bookId);
+            }
+        });
+
         return binding.getRoot();
     }
 }

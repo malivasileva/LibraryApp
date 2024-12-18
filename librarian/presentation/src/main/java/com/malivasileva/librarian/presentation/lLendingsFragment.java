@@ -55,6 +55,7 @@ public class lLendingsFragment extends Fragment {
         binding.recyclerView.setAdapter(lendingAdapter);
 
         binding.searchView.setQueryHint(getString(R.string.search_lendings));
+        binding.searchView.setVisibility(View.INVISIBLE);
         binding.textPlaceholder.setVisibility(View.INVISIBLE);
         binding.recyclerView.setVisibility(View.VISIBLE);
 
